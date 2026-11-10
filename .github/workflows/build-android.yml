@@ -23,7 +23,7 @@ jobs:
       - name: Extract Claude project
         run: |
           mkdir -p /tmp/claude_game
-          unzip -o claude_version/football_dynasty_phase1.zip -d /tmp/claude_game
+          unzip -o claude_version/football_dynasty_fixed.zip -d /tmp/claude_game
           find /tmp/claude_game -name pubspec.yaml -print
 
       - name: Locate Flutter project
