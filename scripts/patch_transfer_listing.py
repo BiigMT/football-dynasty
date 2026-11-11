@@ -39,10 +39,10 @@ patch('lib/domain/career.dart', '''  ActionResult acceptOffer(String offerId) {
       return const ActionResult(false, 'No clubs can afford this player right now.');
     }
     rng.shuffle(buyers);
-    final interested = buyers.take(math.min(3, buyers.length)).toList();
+    final interested = buyers.take(buyers.length < 3 ? buyers.length : 3).toList();
     for (final buyer in interested) {
       final fee = math.max(10000,
-          ((p.value * (0.78 + rng.nextDouble() * 0.18)) / 10000).round() * 10000);
+          ((p.value * (0.78 + rng.nextDouble() * 0.18)) / 10000).round() * 10000).toInt();
       offers.add(TransferOffer(
         id: 'o${offerCounter++}',
         playerId: p.id,
@@ -69,8 +69,8 @@ patch('lib/domain/career.dart', '''    } else {
       userClub.transferBudget += fee;
       final buyer = clubs[toClubId];
       if (buyer != null) {
-        buyer.balance = math.max(0, buyer.balance - fee);
-        buyer.transferBudget = math.max(0, buyer.transferBudget - fee);
+        buyer.balance = buyer.balance >= fee ? buyer.balance - fee : 0;
+        buyer.transferBudget = buyer.transferBudget >= fee ? buyer.transferBudget - fee : 0;
       }
     }
 ''')
