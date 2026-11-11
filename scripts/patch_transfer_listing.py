@@ -12,6 +12,12 @@ def patch(rel, old, new):
         raise SystemExit(f'Expected patch point not found in {rel}')
     path.write_text(source.replace(old, new, 1))
 
+patch('lib/domain/career.dart', """    final buyers = clubs.values.where((c) => c.id != userClubId).toList();
+    final buyer = rng.pick(buyers);""", """    final buyers = clubs.values.where((c) =>
+        c.id != userClubId && c.transferBudget >= target.value && c.balance >= target.value).toList();
+    if (buyers.isEmpty) return;
+    final buyer = rng.pick(buyers);""")
+
 patch('lib/domain/career.dart', '''  ActionResult acceptOffer(String offerId) {
 ''', '''  /// Ask interested AI clubs to make bids for one of our players.
   ActionResult offerPlayerToClubs(String playerId) {
