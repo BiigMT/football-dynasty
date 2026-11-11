@@ -31,7 +31,9 @@ jobs:
           PROJECT=$(find /tmp/claude_game -name pubspec.yaml -print -quit)
           test -n "$PROJECT"
           echo "PROJECT_DIR=$(dirname "$PROJECT")" >> "$GITHUB_ENV"
-
+      - name: Generate Android project files
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: flutter create --platforms=android .
       - name: Get dependencies
         working-directory: ${{ env.PROJECT_DIR }}
         run: flutter pub get
