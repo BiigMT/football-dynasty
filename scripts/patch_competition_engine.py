@@ -160,6 +160,7 @@ patch('lib/screens/dashboard_screen.dart', """            const Expanded(child: 
             ])),""", """            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const Text('FOOTBALL DYNASTY', style: TextStyle(fontSize: 11, letterSpacing: 2.0, color: AppTheme.green, fontWeight: FontWeight.w900)),
               Text(c.competitionName, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900)),
+              if (c.usesGeneratedPlayers) const Text('GENERATED PLAYER DATABASE', style: TextStyle(color: AppTheme.gold, fontSize: 8, letterSpacing: 1, fontWeight: FontWeight.w800)),
             ])),
 """)
 
