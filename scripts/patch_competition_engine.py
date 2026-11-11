@@ -175,7 +175,7 @@ patch('test/career_test.dart', "  test('world generation is deterministic', () {
 
 path = root / 'lib/screens/start_screen.dart'
 src = path.read_text(encoding='utf-8')
-src = re.sub(r"'All clubs, players and competitions are fictional generated data\\. '\\s*'No real-world names, crests or kits are used\\.'", "'Choose from real-world club and league identities. Player squads and ratings are generated placeholders until verified squad packs are added.'", src)
+src = re.sub(r"'All clubs, players and competitions are fictional generated data\\. '\\s*'No real-world names, crests or kits are used\.'", "'Choose from real-world club and league identities. Player squads and ratings are generated placeholders until verified squad packs are added.'", src)
 if "import '../data/real_world_competitions.dart';" not in src:
     src = src.replace("import '../domain/career.dart';", "import '../domain/career.dart';\nimport '../data/real_world_competitions.dart';")
 start = src.index('class NewCareerScreen extends StatefulWidget {')
