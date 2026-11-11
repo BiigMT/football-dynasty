@@ -85,11 +85,11 @@ patch('lib/domain/career.dart', '''    offers.removeAt(idx);
 
 patch('lib/domain/career.dart', '''    if (userSquad.length <= Economy.minSquad) {
       return ActionResult(false,
-          'You need at least \${Economy.minSquad} players. Sign a replacement first.');
+          'You need at least ${Economy.minSquad} players. Sign a replacement first.');
     }
     _moveToClub(p, o.fromClubId, o.fee, selling: true);''', '''    if (userSquad.length <= Economy.minSquad) {
       return ActionResult(false,
-          'You need at least \${Economy.minSquad} players. Sign a replacement first.');
+          'You need at least ${Economy.minSquad} players. Sign a replacement first.');
     }
     final buyer = clubs[o.fromClubId];
     if (buyer == null || buyer.balance < o.fee || buyer.transferBudget < o.fee) {
