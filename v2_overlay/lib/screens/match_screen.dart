@@ -96,6 +96,22 @@ class _MatchScreenState extends State<MatchScreen> {
               ]),
               _Team(club: away),
             ]),
+            const SizedBox(height: 13),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: LinearProgressIndicator(
+                value: finished ? 1 : (minute / 90).clamp(0.0, 1.0).toDouble(),
+                minHeight: 4,
+                backgroundColor: Colors.white.withOpacity(.12),
+                valueColor: const AlwaysStoppedAnimation(AppTheme.green),
+              ),
+            ),
+            const SizedBox(height: 5),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: const [
+              Text('1ST HALF', style: TextStyle(color: Colors.white38, fontSize: 7, letterSpacing: .8)),
+              Text('HALF TIME', style: TextStyle(color: Colors.white38, fontSize: 7, letterSpacing: .8)),
+              Text('FULL TIME', style: TextStyle(color: Colors.white38, fontSize: 7, letterSpacing: .8)),
+            ]),
           ]),
         ),
         Padding(padding: const EdgeInsets.all(12), child: AspectRatio(aspectRatio: 0.88,
