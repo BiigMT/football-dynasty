@@ -33,8 +33,8 @@ patch('lib/domain/career.dart', '''  ActionResult acceptOffer(String offerId) {
     final rng = SeededRandom(mixSeed(seed, hashString(playerId) + season * 31 + matchday));
     final buyers = clubs.values
         .where((club) => club.id != userClubId &&
-            club.transferBudget >= (p.value * 0.78).round() &&
-            club.balance >= (p.value * 0.78).round())
+            club.transferBudget >= p.value &&
+            club.balance >= p.value)
         .toList()
       ..sort((a, b) => b.reputation.compareTo(a.reputation));
     if (buyers.isEmpty) {
@@ -82,6 +82,20 @@ patch('lib/domain/career.dart', '''    offers.removeAt(idx);
 ''', '''    offers.removeWhere((other) => other.playerId == p.id);
     _addNews('${p.name} sold to ${clubs[o.fromClubId]!.name} for ${_money(o.fee)}.');
 ''')
+
+patch('lib/domain/career.dart', '''    if (userSquad.length <= Economy.minSquad) {
+      return ActionResult(false,
+          'You need at least \${Economy.minSquad} players. Sign a replacement first.');
+    }
+    _moveToClub(p, o.fromClubId, o.fee, selling: true);''', '''    if (userSquad.length <= Economy.minSquad) {
+      return ActionResult(false,
+          'You need at least \${Economy.minSquad} players. Sign a replacement first.');
+    }
+    final buyer = clubs[o.fromClubId];
+    if (buyer == null || buyer.balance < o.fee || buyer.transferBudget < o.fee) {
+      return const ActionResult(false, 'The buying club can no longer afford this offer.');
+    }
+    _moveToClub(p, o.fromClubId, o.fee, selling: true);''')
 
 patch('lib/state/game_controller.dart', '''  BidResponse bid(String id, int fee) => run((c) => c.bid(id, fee));
 ''', '''  BidResponse bid(String id, int fee) => run((c) => c.bid(id, fee));
