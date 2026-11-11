@@ -115,11 +115,24 @@ class _PlayerDot extends StatelessWidget {
     final y = row / 3;
     final left = home ? x : 1 - x;
     final top = home ? .13 + y * .70 : .13 + (1 - y) * .70;
-    return Positioned(left: MediaQuery.of(context).size.width * .70 * left - 10,
-      top: 12 + MediaQuery.of(context).size.width * .70 * top * .38,
-      child: Container(width: 21, height: 21, decoration: BoxDecoration(
-        color: home ? AppTheme.green : AppTheme.gold, shape: BoxShape.circle, border: Border.all(color: Colors.white)),
-        alignment: Alignment.center, child: Text((index + 1).toString(), style: const TextStyle(color: Color(0xFF08111D), fontSize: 8, fontWeight: FontWeight.w900))));
+    return LayoutBuilder(builder: (context, constraints) {
+      const size = 23.0;
+      final dx = (constraints.maxWidth * left - size / 2).clamp(0.0, constraints.maxWidth - size);
+      final dy = (constraints.maxHeight * top - size / 2).clamp(0.0, constraints.maxHeight - size);
+      return Stack(children: [
+        Positioned(left: dx, top: dy, child: Container(
+          width: size, height: size,
+          decoration: BoxDecoration(
+            color: home ? AppTheme.green : AppTheme.gold,
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.white, width: 1.5),
+            boxShadow: [BoxShadow(color: Colors.black.withOpacity(.35), blurRadius: 5, offset: const Offset(0, 2))],
+          ),
+          alignment: Alignment.center,
+          child: Text((index + 1).toString(), style: const TextStyle(color: Color(0xFF08111D), fontSize: 8, fontWeight: FontWeight.w900)),
+        )),
+      ]);
+    });
   }
 }
 class _PitchPainter extends CustomPainter {
