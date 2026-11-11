@@ -123,11 +123,33 @@ class _MatchScreenState extends State<MatchScreen> {
             ]),
           )),
         )),
-        Padding(padding: const EdgeInsets.symmetric(horizontal: 16), child: Row(children: [
-          const Icon(Icons.sensors, color: AppTheme.green, size: 15), const SizedBox(width: 7),
-          Expanded(child: Text(visible.isEmpty ? 'Teams are preparing for kick-off' : visible.last.detail, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11, color: Colors.white70))),
-          Text('$minute’', style: const TextStyle(color: AppTheme.green, fontWeight: FontWeight.w900)),
-        ])),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(12, 0, 12, 4),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: const Color(0xFF142438),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.white.withOpacity(.07)),
+            ),
+            child: Row(children: [
+              const Icon(Icons.graphic_eq_rounded, color: AppTheme.green, size: 17),
+              const SizedBox(width: 9),
+              Expanded(child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 250),
+                child: Text(
+                  visible.isEmpty ? 'The teams are ready. Waiting for kick-off…' : visible.last.detail,
+                  key: ValueKey(visible.isEmpty ? 'kickoff' : '${visible.last.minute}-${visible.last.detail}'),
+                  maxLines: 2, overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 11, color: Colors.white70, fontWeight: FontWeight.w600),
+                ),
+              )),
+              const SizedBox(width: 8),
+              Text(minute == 0 ? '00’' : "$minute’",
+                style: const TextStyle(color: AppTheme.green, fontSize: 12, fontWeight: FontWeight.w900)),
+            ]),
+          ),
+        ),
         Expanded(child: ListView(padding: const EdgeInsets.all(14), children: [
           const Text('MATCH TIMELINE', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w900, letterSpacing: 1.2)),
           const SizedBox(height: 8),
