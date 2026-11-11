@@ -917,7 +917,260 @@
     }
   ],
   "playerSquads": {
-    "status": "not_yet_added",
-    "note": "No real-player records are included until each first-team squad, player identity, position, nationality and age can be checked against an official club or league source. Do not replace this with invented names."
+    "status": "partial",
+    "verifiedAt": "2026-11-11",
+    "note": "Verified player identities, positions, nationalities and ages are currently available for selected Zambian clubs only. Other clubs use generated placeholder players. In-game ratings, wages, values and potentials are simulation estimates, not official ratings.",
+    "squads": [
+      {
+        "clubId": "zam-zesco",
+        "clubName": "ZESCO United",
+        "sourceUrl": "https://www.national-football-teams.com/club/2766/2026_1/Zesco_United_Ndola.html",
+        "verifiedAt": "2026-11-11",
+        "players": [
+          {
+            "name": "Shemmy Mayembe",
+            "position": "RB",
+            "nationality": "ZAM",
+            "age": 28
+          },
+          {
+            "name": "Samson Mkandawire",
+            "position": "RB",
+            "nationality": "ZAM",
+            "age": 30
+          },
+          {
+            "name": "Lindo Mkhonta",
+            "position": "RB",
+            "nationality": "SWZ",
+            "age": 35
+          },
+          {
+            "name": "Gift Mphande",
+            "position": "CB",
+            "nationality": "ZAM",
+            "age": 22
+          },
+          {
+            "name": "Pride Mwansa",
+            "position": "CB",
+            "nationality": "ZAM",
+            "age": 29
+          },
+          {
+            "name": "Clement Mwape",
+            "position": "CB",
+            "nationality": "ZAM",
+            "age": 37
+          },
+          {
+            "name": "Tandi Mwape",
+            "position": "CB",
+            "nationality": "ZAM",
+            "age": 30
+          },
+          {
+            "name": "Fred Mwiche",
+            "position": "LB",
+            "nationality": "ZAM",
+            "age": 24
+          },
+          {
+            "name": "Solomon Sakala",
+            "position": "CB",
+            "nationality": "ZAM",
+            "age": 29
+          },
+          {
+            "name": "Simon Silwimba",
+            "position": "RB",
+            "nationality": "ZAM",
+            "age": 34
+          },
+          {
+            "name": "Derrick Assoumou",
+            "position": "AM",
+            "nationality": "GAB",
+            "age": 21
+          },
+          {
+            "name": "John Chingandu",
+            "position": "AM",
+            "nationality": "ZAM",
+            "age": 32
+          },
+          {
+            "name": "Kelvin Kampamba",
+            "position": "AM",
+            "nationality": "ZAM",
+            "age": 29
+          },
+          {
+            "name": "Leonard Mulenga",
+            "position": "DM",
+            "nationality": "ZAM",
+            "age": 28
+          },
+          {
+            "name": "Luka Mutoshi",
+            "position": "CM",
+            "nationality": "ZAM",
+            "age": 22
+          },
+          {
+            "name": "Spencer Sautu",
+            "position": "AM",
+            "nationality": "ZAM",
+            "age": 32
+          },
+          {
+            "name": "Collins Sikombe",
+            "position": "AM",
+            "nationality": "ZAM",
+            "age": 29
+          },
+          {
+            "name": "David Simukonda",
+            "position": "CM",
+            "nationality": "ZAM",
+            "age": 21
+          },
+          {
+            "name": "Amine Hiver",
+            "position": "ST",
+            "nationality": "TCD",
+            "age": 28
+          },
+          {
+            "name": "Chitiya Mususu",
+            "position": "ST",
+            "nationality": "ZAM",
+            "age": 31
+          },
+          {
+            "name": "Alex Ngonga",
+            "position": "ST",
+            "nationality": "ZAM",
+            "age": 34
+          },
+          {
+            "name": "Pascal Phiri",
+            "position": "RW",
+            "nationality": "ZAM",
+            "age": 21
+          },
+          {
+            "name": "Abraham Siankombo",
+            "position": "ST",
+            "nationality": "ZAM",
+            "age": 28
+          }
+        ]
+      },
+      {
+        "clubId": "zam-red-arrows",
+        "clubName": "Red Arrows",
+        "sourceUrl": "https://www.national-football-teams.com/club/2764/2026/Red_Arrows_Lusaka.html",
+        "verifiedAt": "2026-11-11",
+        "players": [
+          {
+            "name": "Charles Kalumba",
+            "position": "GK",
+            "nationality": "ZAM",
+            "age": 30
+          },
+          {
+            "name": "Benedict Chepeshi",
+            "position": "RB",
+            "nationality": "ZAM",
+            "age": 30
+          },
+          {
+            "name": "Kebson Kamanga",
+            "position": "CB",
+            "nationality": "ZAM",
+            "age": 29
+          },
+          {
+            "name": "Allan Kapila",
+            "position": "RB",
+            "nationality": "ZAM",
+            "age": 31
+          },
+          {
+            "name": "Fackson Kapumbu",
+            "position": "LB",
+            "nationality": "ZAM",
+            "age": 36
+          },
+          {
+            "name": "Rudy Makwekwe",
+            "position": "CB",
+            "nationality": "COD",
+            "age": 32
+          },
+          {
+            "name": "Happy Nsiku",
+            "position": "CB",
+            "nationality": "ZAM",
+            "age": 21
+          },
+          {
+            "name": "Brian Chilimina",
+            "position": "CB",
+            "nationality": "ZAM",
+            "age": 29
+          },
+          {
+            "name": "Albert Kangwanda",
+            "position": "AM",
+            "nationality": "ZAM",
+            "age": 27
+          },
+          {
+            "name": "Paul Katema",
+            "position": "CM",
+            "nationality": "ZAM",
+            "age": 29
+          },
+          {
+            "name": "Saddam Phiri",
+            "position": "CM",
+            "nationality": "ZAM",
+            "age": 34
+          },
+          {
+            "name": "Ricky Banda",
+            "position": "ST",
+            "nationality": "ZAM",
+            "age": 25
+          },
+          {
+            "name": "Twiza Chaibela",
+            "position": "ST",
+            "nationality": "ZAM",
+            "age": 29
+          },
+          {
+            "name": "James Chamanga",
+            "position": "ST",
+            "nationality": "ZAM",
+            "age": 46
+          },
+          {
+            "name": "Bola Lobota",
+            "position": "ST",
+            "nationality": "COD",
+            "age": 26
+          },
+          {
+            "name": "Joseph Phiri",
+            "position": "ST",
+            "nationality": "ZAM",
+            "age": 29
+          }
+        ]
+      }
+    ]
   }
 }
