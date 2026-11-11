@@ -120,8 +120,13 @@ patch('lib/domain/career.dart', """  List<Player> get freeAgents => players.valu
     }
     nationalTeamCode = code;
     final pool = eligibleNationalPlayers;
-    nationalCallups = pool.take(23).map((p) => p.id).toSet();
-    nationalStartingXi = pool.take(11).map((p) => p.id).toSet();
+    final starters = LineupBuilder.build(pool, Tactics());
+    nationalStartingXi = starters.map((slot) => slot.player.id).toSet();
+    nationalCallups = <String>{...nationalStartingXi};
+    for (final player in pool) {
+      if (nationalCallups.length >= 23) break;
+      nationalCallups.add(player.id);
+    }
     nationalCaptainId = pool.isEmpty ? null : pool.first.id;
     _addNews('You have been appointed head coach of ${nationalTeams[code]}.');
     return ActionResult(true, 'You are now the manager of ${nationalTeams[code]}.');
@@ -211,9 +216,10 @@ patch('lib/state/game_controller.dart', """  ActionResult offerToClubs(String id
 patch('test/career_test.dart', """  test('a full season plays out with a consistent table', () {
 """, """  test('national manager can appoint a team, call up players and save selection', () {
     final c = _new();
-    final appointment = c.appointNationalTeam('ZAM');
+    final code = c.players.values.first.nationality;
+    final appointment = c.appointNationalTeam(code);
     expect(appointment.ok, isTrue);
-    expect(c.nationalTeamCode, 'ZAM');
+    expect(c.nationalTeamCode, code);
     expect(c.nationalCallups.length, lessThanOrEqualTo(23));
     expect(c.nationalStartingXi.length, lessThanOrEqualTo(11));
 
@@ -226,7 +232,7 @@ patch('test/career_test.dart', """  test('a full season plays out with a consist
     final selected = c.nationalCallups.first;
     expect(c.setNationalCaptain(selected).ok, isTrue);
     final restored = Career.fromJson(c.toJson());
-    expect(restored.nationalTeamCode, 'ZAM');
+    expect(restored.nationalTeamCode, code);
     expect(restored.nationalCallups, c.nationalCallups);
     expect(restored.nationalCaptainId, c.nationalCaptainId);
   });
