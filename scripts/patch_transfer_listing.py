@@ -32,7 +32,9 @@ patch('lib/domain/career.dart', '''  ActionResult acceptOffer(String offerId) {
 
     final rng = SeededRandom(mixSeed(seed, hashString(playerId) + season * 31 + matchday));
     final buyers = clubs.values
-        .where((club) => club.id != userClubId && club.transferBudget >= p.value && club.balance >= p.value)
+        .where((club) => club.id != userClubId &&
+            club.transferBudget >= (p.value * 0.78).round() &&
+            club.balance >= (p.value * 0.78).round())
         .toList()
       ..sort((a, b) => b.reputation.compareTo(a.reputation));
     if (buyers.isEmpty) {
