@@ -133,12 +133,12 @@ class _PlayerDot extends StatelessWidget {
     final phase = (minute ~/ 3 + index * 7) % 9;
     final driftX = minute == 0 ? 0.0 : (phase - 4) * .008;
     final driftY = minute == 0 ? 0.0 : ((index + minute ~/ 5) % 5 - 2) * .009;
-    final left = (home ? x + driftX : 1 - x - driftX).clamp(.06, .94);
-    final top = (home ? .13 + y * .70 + driftY : .13 + (1 - y) * .70 - driftY).clamp(.08, .92);
+    final left = (home ? x + driftX : 1 - x - driftX).clamp(.06, .94).toDouble();
+    final top = (home ? .13 + y * .70 + driftY : .13 + (1 - y) * .70 - driftY).clamp(.08, .92).toDouble();
     return LayoutBuilder(builder: (context, constraints) {
       const size = 23.0;
-      final dx = (constraints.maxWidth * left - size / 2).clamp(0.0, constraints.maxWidth - size);
-      final dy = (constraints.maxHeight * top - size / 2).clamp(0.0, constraints.maxHeight - size);
+      final dx = (constraints.maxWidth * left - size / 2).clamp(0.0, constraints.maxWidth - size).toDouble();
+      final dy = (constraints.maxHeight * top - size / 2).clamp(0.0, constraints.maxHeight - size).toDouble();
       return Stack(children: [
         AnimatedPositioned(duration: const Duration(milliseconds: 700), curve: Curves.easeInOut, left: dx, top: dy, child: Container(
           width: size, height: size,
