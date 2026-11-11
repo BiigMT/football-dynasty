@@ -14,7 +14,7 @@ def patch(rel, old, new):
 
 patch('lib/domain/career.dart', """    final buyers = clubs.values.where((c) => c.id != userClubId).toList();
     final buyer = rng.pick(buyers);""", """    final buyers = clubs.values.where((c) =>
-        c.id != userClubId && c.transferBudget >= target.value && c.balance >= target.value).toList();
+        c.id != userClubId && c.transferBudget >= (target.value * 1.3).round() && c.balance >= (target.value * 1.3).round()).toList();
     if (buyers.isEmpty) return;
     final buyer = rng.pick(buyers);""")
 
