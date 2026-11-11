@@ -1,5 +1,6 @@
 name: Build Football Dynasty APK
 # Build gate: validate generated Dart, run tests, and produce the release APK.
+# Dashboard refresh: premium cyan manager hub and glass-panel navigation.
 
 on:
   push:
