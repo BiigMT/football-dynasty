@@ -154,6 +154,16 @@ patch('lib/state/game_controller.dart', """  Future<void> startCareer(int s, Str
 
 patch('lib/screens/competitions_screen.dart', """          child: ScreenHeader(kicker: 'FICTIONAL LEAGUE', title: 'Premier Division \${c.seasonLabel}'),""", """          child: ScreenHeader(kicker: 'LEAGUE COMPETITION', title: '\${c.competitionName} \${c.seasonLabel}'),""")
 
+patch('lib/screens/dashboard_screen.dart', """            const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text('FOOTBALL DYNASTY', style: TextStyle(fontSize: 11, letterSpacing: 2.0, color: AppTheme.green, fontWeight: FontWeight.w900)),
+              Text('Manager career', style: TextStyle(fontSize: 19, fontWeight: FontWeight.w900)),
+            ])),""", """            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text('FOOTBALL DYNASTY', style: TextStyle(fontSize: 11, letterSpacing: 2.0, color: AppTheme.green, fontWeight: FontWeight.w900)),
+              Text(c.competitionName, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900)),
+            ])),
+""")
+
+
 
 patch('test/career_test.dart', "import 'package:football_dynasty/domain/models.dart';", "import 'package:football_dynasty/domain/models.dart';\nimport 'package:football_dynasty/data/real_world_competitions.dart';")
 patch('test/career_test.dart', "  test('world generation is deterministic', () {", """  test('real-world competition sizes generate complete independent leagues', () {
