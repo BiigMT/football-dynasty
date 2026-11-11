@@ -83,9 +83,26 @@ for league_id, matches in expected_matches.items():
         f"{league_id}: expected {matches} matches per team"
     )
 
-assert data.get("playerSquads", {}).get("status") == "not_yet_added", (
-    "Real-player squads must not be marked complete until official verification"
-)
+player_data = data.get("playerSquads", {})
+assert player_data.get("status") == "partial", "Player squad status must accurately reflect partial coverage"
+squad_clubs = set()
+for squad in player_data.get("squads", []):
+    assert squad["clubId"] in club_ids, f"Unknown squad club: {squad['clubId']}"
+    assert squad["clubId"] not in squad_clubs, f"Duplicate squad pack: {squad['clubId']}"
+    squad_clubs.add(squad["clubId"])
+    assert squad.get("sourceUrl", "").startswith("https://"), f"Squad {squad['clubId']} has no source"
+    player_names = set()
+    for player in squad.get("players", []):
+        assert player.get("name") and player.get("position") and player.get("nationality"), (
+            f"Incomplete player record in {squad['clubId']}"
+        )
+        assert isinstance(player.get("age"), int) and 15 <= player["age"] <= 50, (
+            f"Invalid or unverified age for {player.get('name')}"
+        )
+        assert player["name"] not in player_names, f"Duplicate player {player['name']} in {squad['clubId']}"
+        player_names.add(player["name"])
+assert len(squad_clubs) >= 2, "At least two verified squad packs expected"
+
 
 print(f"Real-world dataset valid: {len(competitions)} competitions, {len(club_ids)} clubs.")
 
