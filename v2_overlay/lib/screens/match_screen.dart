@@ -143,7 +143,6 @@ class _PlayerDot extends StatelessWidget {
         AnimatedPositioned(duration: const Duration(milliseconds: 700), curve: Curves.easeInOut, left: dx, top: dy, child: Container(
           width: size, height: size,
           decoration: BoxDecoration(
-            color: home ? const Color(0xFFB7F36B) : const Color(0xFFFFC857),
             shape: BoxShape.circle,
             gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: home ? [const Color(0xFFE3FFB4), AppTheme.green, const Color(0xFF639C2B)] : [const Color(0xFFFFE6A3), AppTheme.gold, const Color(0xFFB87916)],),
             border: Border.all(color: Colors.white, width: 1.5),
