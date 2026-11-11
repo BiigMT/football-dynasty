@@ -32,8 +32,8 @@ patch('lib/domain/career.dart', '''  void rejectOffer(String offerId) => offers.
     if (requestedFee <= fairCeiling) {
       _moveToClub(player, buyer.id, requestedFee, selling: true);
       offers.removeWhere((o) => o.playerId == player.id);
-      _addNews('\${buyer.name} accepted your counter-offer for \${player.name}: \${_money(requestedFee)}.');
-      return ActionResult(true, '\${buyer.name} accepted. \${player.name} has been sold for \${_money(requestedFee)}.');
+      _addNews('${buyer.name} accepted your counter-offer for ${player.name}: ${_money(requestedFee)}.');
+      return ActionResult(true, '${buyer.name} accepted. ${player.name} has been sold for ${_money(requestedFee)}.');
     }
     if (requestedFee <= (fairCeiling * 1.18).round()) {
       final counter = TransferOffer(
@@ -41,8 +41,8 @@ patch('lib/domain/career.dart', '''  void rejectOffer(String offerId) => offers.
         fee: fairCeiling, expiresMatchday: offer.expiresMatchday, season: offer.season,
       );
       offers[index] = counter;
-      _addNews('\${buyer.name} rejected your demand but improved their offer for \${player.name} to \${_money(fairCeiling)}.');
-      return ActionResult(true, 'They countered at \${_money(fairCeiling)}. Review the updated offer.');
+      _addNews('${buyer.name} rejected your demand but improved their offer for ${player.name} to ${_money(fairCeiling)}.');
+      return ActionResult(true, 'They countered at ${_money(fairCeiling)}. Review the updated offer.');
     }
     return const ActionResult(false, 'The club rejected your counter-offer. You can still accept their original bid.');
   }
@@ -59,9 +59,9 @@ patch('lib/screens/transfers_screen.dart', '''  Widget _offers(BuildContext cont
     final fee = await showDialog<int>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Counter \${fmtMoney(offer.fee)} offer'),
+        title: Text('Counter ${fmtMoney(offer.fee)} offer'),
         content: Column(mainAxisSize: MainAxisSize.min, children: [
-          Text('Their bid: \${fmtMoney(offer.fee)} • Player value: \${fmtMoney(player.value)}', style: const TextStyle(color: Colors.white60, fontSize: 12)),
+          Text('Their bid: ${fmtMoney(offer.fee)} • Player value: ${fmtMoney(player.value)}', style: const TextStyle(color: Colors.white60, fontSize: 12)),
           const SizedBox(height: 12),
           TextField(controller: controller, keyboardType: TextInputType.number,
             decoration: const InputDecoration(labelText: 'Your requested fee (€)', border: OutlineInputBorder())),
