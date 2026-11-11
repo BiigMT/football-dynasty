@@ -215,7 +215,21 @@ patch('lib/screens/dashboard_screen.dart', """            const Expanded(child: 
 
 
 patch('test/career_test.dart', "import 'package:football_dynasty/domain/models.dart';", "import 'package:football_dynasty/domain/models.dart';\nimport 'package:football_dynasty/data/real_world_competitions.dart';")
-patch('test/career_test.dart', "  test('world generation is deterministic', () {", """  test('real-world competition sizes generate complete independent leagues', () {
+patch('test/career_test.dart', "  test('world generation is deterministic', () {", """  test('real-world player market includes clubs outside the selected league', () {
+    final competition = RealWorldCompetitions.all.first;
+    final c = Career.newGame(managerName: 'Tester', userClubId: competition.clubs.first.id, seed: 4455, competitionId: competition.id, includeAllCompetitions: true);
+    final otherClubId = c.clubs.keys.firstWhere((id) => !c.competitionClubIds.contains(id));
+    final target = c.squad(otherClubId).firstWhere((p) => p.position == 'ST');
+    c.userClub.balance = 1000000000;
+    c.userClub.transferBudget = 1000000000;
+    c.userClub.wageBudget = 100000000;
+    final fee = Economy.askingPrice(target, c.squad(otherClubId)) * 2;
+    final response = c.bid(target.id, fee);
+    expect(response.status, BidStatus.accepted);
+    expect(target.clubId, c.userClubId);
+  });
+
+  test('world generation is deterministic', () {""") """  test('real-world competition sizes generate complete independent leagues', () {
     for (final competition in RealWorldCompetitions.all) {
       final c = Career.newGame(managerName: 'Tester', userClubId: competition.clubs.first.id, seed: 20261111, competitionId: competition.id, includeAllCompetitions: true);
       expect(c.competitionName, competition.name);
