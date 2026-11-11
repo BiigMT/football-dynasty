@@ -135,6 +135,9 @@ patch('lib/state/game_controller.dart', """  Future<void> startCareer(int s, Str
     career = Career.newGame(managerName: manager, userClubId: clubId, seed: seed);""", """  Future<void> startCareer(int s, String manager, String clubId, int seed, {String competitionId = 'fictional-demo'}) async {
     career = Career.newGame(managerName: manager, userClubId: clubId, seed: seed, competitionId: competitionId);""")
 
+patch('lib/screens/competitions_screen.dart', """          child: ScreenHeader(kicker: 'FICTIONAL LEAGUE', title: 'Premier Division \${c.seasonLabel}'),""", """          child: ScreenHeader(kicker: 'LEAGUE COMPETITION', title: '\${c.competitionName} \${c.seasonLabel}'),""")
+
+
 patch('test/career_test.dart', "import 'package:football_dynasty/domain/models.dart';", "import 'package:football_dynasty/domain/models.dart';\nimport 'package:football_dynasty/data/real_world_competitions.dart';")
 patch('test/career_test.dart', "  test('world generation is deterministic', () {", """  test('real-world competition sizes generate complete independent leagues', () {
     for (final competition in RealWorldCompetitions.all) {
