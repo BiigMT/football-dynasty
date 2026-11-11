@@ -56,7 +56,7 @@ class _ShellScreenState extends State<ShellScreen> {
         child: SafeArea(
           top: false,
           child: SizedBox(
-            height: 66,
+            height: 72,
             child: Row(
               children: List.generate(labels.length, (index) {
                 final selected = selectedIndex == index;
@@ -76,18 +76,32 @@ class _ShellScreenState extends State<ShellScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
-                            icons[index],
-                            size: 20,
-                            color: selected ? AppTheme.green : AppTheme.muted,
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 180),
+                            width: selected ? 25 : 20,
+                            height: 3,
+                            margin: const EdgeInsets.only(bottom: 5),
+                            decoration: BoxDecoration(
+                              color: selected ? AppTheme.green : Colors.transparent,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                          AnimatedScale(
+                            scale: selected ? 1.12 : 1,
+                            duration: const Duration(milliseconds: 180),
+                            child: Icon(
+                              icons[index],
+                              size: 20,
+                              color: selected ? AppTheme.green : AppTheme.muted,
+                            ),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             labels[index],
                             maxLines: 1,
                             style: TextStyle(
-                              fontSize: 7,
-                              letterSpacing: .4,
+                              fontSize: 8,
+                              letterSpacing: .35,
                               fontWeight: selected ? FontWeight.w900 : FontWeight.w600,
                               color: selected ? AppTheme.green : AppTheme.muted,
                             ),
