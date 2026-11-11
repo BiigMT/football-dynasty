@@ -17,26 +17,86 @@
       "pointsForDraw": 1,
       "source": "https://www.premierleague.com/en/news/4365156",
       "clubs": [
-        {"id":"eng-bou","name":"AFC Bournemouth"},
-        {"id":"eng-ars","name":"Arsenal"},
-        {"id":"eng-avl","name":"Aston Villa"},
-        {"id":"eng-bre","name":"Brentford"},
-        {"id":"eng-bha","name":"Brighton & Hove Albion"},
-        {"id":"eng-che","name":"Chelsea"},
-        {"id":"eng-cov","name":"Coventry City"},
-        {"id":"eng-cry","name":"Crystal Palace"},
-        {"id":"eng-eve","name":"Everton"},
-        {"id":"eng-ful","name":"Fulham"},
-        {"id":"eng-hul","name":"Hull City"},
-        {"id":"eng-ips","name":"Ipswich Town"},
-        {"id":"eng-lee","name":"Leeds United"},
-        {"id":"eng-liv","name":"Liverpool"},
-        {"id":"eng-mci","name":"Manchester City"},
-        {"id":"eng-mun","name":"Manchester United"},
-        {"id":"eng-new","name":"Newcastle United"},
-        {"id":"eng-nfo","name":"Nottingham Forest"},
-        {"id":"eng-sun","name":"Sunderland"},
-        {"id":"eng-tot","name":"Tottenham Hotspur"}
+        {
+          "id": "eng-bou",
+          "name": "AFC Bournemouth"
+        },
+        {
+          "id": "eng-ars",
+          "name": "Arsenal"
+        },
+        {
+          "id": "eng-avl",
+          "name": "Aston Villa"
+        },
+        {
+          "id": "eng-bre",
+          "name": "Brentford"
+        },
+        {
+          "id": "eng-bha",
+          "name": "Brighton & Hove Albion"
+        },
+        {
+          "id": "eng-che",
+          "name": "Chelsea"
+        },
+        {
+          "id": "eng-cov",
+          "name": "Coventry City"
+        },
+        {
+          "id": "eng-cry",
+          "name": "Crystal Palace"
+        },
+        {
+          "id": "eng-eve",
+          "name": "Everton"
+        },
+        {
+          "id": "eng-ful",
+          "name": "Fulham"
+        },
+        {
+          "id": "eng-hul",
+          "name": "Hull City"
+        },
+        {
+          "id": "eng-ips",
+          "name": "Ipswich Town"
+        },
+        {
+          "id": "eng-lee",
+          "name": "Leeds United"
+        },
+        {
+          "id": "eng-liv",
+          "name": "Liverpool"
+        },
+        {
+          "id": "eng-mci",
+          "name": "Manchester City"
+        },
+        {
+          "id": "eng-mun",
+          "name": "Manchester United"
+        },
+        {
+          "id": "eng-new",
+          "name": "Newcastle United"
+        },
+        {
+          "id": "eng-nfo",
+          "name": "Nottingham Forest"
+        },
+        {
+          "id": "eng-sun",
+          "name": "Sunderland"
+        },
+        {
+          "id": "eng-tot",
+          "name": "Tottenham Hotspur"
+        }
       ]
     },
     {
@@ -55,16 +115,46 @@
           "name": "Stream A",
           "matchesPerTeam": 18,
           "clubs": [
-            {"id":"zam-nkana","name":"Nkana FC"},
-            {"id":"zam-konkola","name":"Konkola Blades"},
-            {"id":"zam-muza","name":"FC MUZA"},
-            {"id":"zam-zanaco","name":"ZANACO FC"},
-            {"id":"zam-power","name":"Power Dynamos FC"},
-            {"id":"zam-nchanga","name":"Nchanga Rangers"},
-            {"id":"zam-kansanshi","name":"Kansanshi Dynamos"},
-            {"id":"zam-trident","name":"Trident FC"},
-            {"id":"zam-napsa","name":"NAPSA Stars"},
-            {"id":"zam-makeni","name":"Makeni All Stars"}
+            {
+              "id": "zam-nkana",
+              "name": "Nkana FC"
+            },
+            {
+              "id": "zam-konkola",
+              "name": "Konkola Blades"
+            },
+            {
+              "id": "zam-muza",
+              "name": "FC MUZA"
+            },
+            {
+              "id": "zam-zanaco",
+              "name": "ZANACO FC"
+            },
+            {
+              "id": "zam-power",
+              "name": "Power Dynamos FC"
+            },
+            {
+              "id": "zam-nchanga",
+              "name": "Nchanga Rangers"
+            },
+            {
+              "id": "zam-kansanshi",
+              "name": "Kansanshi Dynamos"
+            },
+            {
+              "id": "zam-trident",
+              "name": "Trident FC"
+            },
+            {
+              "id": "zam-napsa",
+              "name": "NAPSA Stars"
+            },
+            {
+              "id": "zam-makeni",
+              "name": "Makeni All Stars"
+            }
           ]
         },
         {
@@ -72,16 +162,46 @@
           "name": "Stream B",
           "matchesPerTeam": 18,
           "clubs": [
-            {"id":"zam-red-arrows","name":"Red Arrows"},
-            {"id":"zam-kabwe-warriors","name":"Kabwe Warriors"},
-            {"id":"zam-green-eagles","name":"Green Eagles"},
-            {"id":"zam-mufulira","name":"Mufulira Wanderers"},
-            {"id":"zam-zesco","name":"ZESCO United"},
-            {"id":"zam-green-buffaloes","name":"Green Buffaloes"},
-            {"id":"zam-nkwazi","name":"Nkwazi FC"},
-            {"id":"zam-mutondo","name":"Mutondo Stars"},
-            {"id":"zam-chirundu","name":"Chirundu United"},
-            {"id":"zam-roan","name":"Roan United"}
+            {
+              "id": "zam-red-arrows",
+              "name": "Red Arrows"
+            },
+            {
+              "id": "zam-kabwe-warriors",
+              "name": "Kabwe Warriors"
+            },
+            {
+              "id": "zam-green-eagles",
+              "name": "Green Eagles"
+            },
+            {
+              "id": "zam-mufulira",
+              "name": "Mufulira Wanderers"
+            },
+            {
+              "id": "zam-zesco",
+              "name": "ZESCO United"
+            },
+            {
+              "id": "zam-green-buffaloes",
+              "name": "Green Buffaloes"
+            },
+            {
+              "id": "zam-nkwazi",
+              "name": "Nkwazi FC"
+            },
+            {
+              "id": "zam-mutondo",
+              "name": "Mutondo Stars"
+            },
+            {
+              "id": "zam-chirundu",
+              "name": "Chirundu United"
+            },
+            {
+              "id": "zam-roan",
+              "name": "Roan United"
+            }
           ]
         }
       ],
@@ -90,6 +210,370 @@
         "participants": "Stream A winner versus Stream B winner",
         "source": "https://zambianfootball.co.zm/zpl-title-to-be-decided-by-championship-match-in-2026-transition-season/"
       }
+    },
+    {
+      "id": "esp-la-liga",
+      "name": "LaLiga EA SPORTS",
+      "countryCode": "ESP",
+      "countryName": "Spain",
+      "season": "2026/27",
+      "format": "double_round_robin",
+      "teamCount": 20,
+      "matchesPerTeam": 38,
+      "pointsForWin": 3,
+      "pointsForDraw": 1,
+      "source": "https://www.laliga.com/en-US/laliga-easports/clubs",
+      "clubs": [
+        {
+          "id": "esp-ath",
+          "name": "Athletic Club"
+        },
+        {
+          "id": "esp-atm",
+          "name": "Atlético de Madrid"
+        },
+        {
+          "id": "esp-osa",
+          "name": "CA Osasuna"
+        },
+        {
+          "id": "esp-cel",
+          "name": "Celta"
+        },
+        {
+          "id": "esp-ala",
+          "name": "Deportivo Alavés"
+        },
+        {
+          "id": "esp-elc",
+          "name": "Elche CF"
+        },
+        {
+          "id": "esp-bar",
+          "name": "FC Barcelona"
+        },
+        {
+          "id": "esp-get",
+          "name": "Getafe CF"
+        },
+        {
+          "id": "esp-lev",
+          "name": "Levante UD"
+        },
+        {
+          "id": "esp-mal",
+          "name": "Málaga CF"
+        },
+        {
+          "id": "esp-rac",
+          "name": "Racing Santander"
+        },
+        {
+          "id": "esp-ray",
+          "name": "Rayo Vallecano"
+        },
+        {
+          "id": "esp-dep",
+          "name": "RC Deportivo"
+        },
+        {
+          "id": "esp-esp",
+          "name": "RCD Espanyol de Barcelona"
+        },
+        {
+          "id": "esp-bet",
+          "name": "Real Betis"
+        },
+        {
+          "id": "esp-rma",
+          "name": "Real Madrid"
+        },
+        {
+          "id": "esp-rso",
+          "name": "Real Sociedad"
+        },
+        {
+          "id": "esp-sev",
+          "name": "Sevilla FC"
+        },
+        {
+          "id": "esp-val",
+          "name": "Valencia CF"
+        },
+        {
+          "id": "esp-vil",
+          "name": "Villarreal CF"
+        }
+      ]
+    },
+    {
+      "id": "ger-bundesliga",
+      "name": "Bundesliga",
+      "countryCode": "GER",
+      "countryName": "Germany",
+      "season": "2026/27",
+      "format": "double_round_robin",
+      "teamCount": 18,
+      "matchesPerTeam": 34,
+      "pointsForWin": 3,
+      "pointsForDraw": 1,
+      "source": "https://www.bundesliga.com/en/bundesliga/clubs",
+      "clubs": [
+        {
+          "id": "ger-bayern",
+          "name": "FC Bayern München"
+        },
+        {
+          "id": "ger-dortmund",
+          "name": "Borussia Dortmund"
+        },
+        {
+          "id": "ger-leipzig",
+          "name": "RB Leipzig"
+        },
+        {
+          "id": "ger-stuttgart",
+          "name": "VfB Stuttgart"
+        },
+        {
+          "id": "ger-hoffenheim",
+          "name": "TSG Hoffenheim"
+        },
+        {
+          "id": "ger-leverkusen",
+          "name": "Bayer 04 Leverkusen"
+        },
+        {
+          "id": "ger-freiburg",
+          "name": "Sport-Club Freiburg"
+        },
+        {
+          "id": "ger-frankfurt",
+          "name": "Eintracht Frankfurt"
+        },
+        {
+          "id": "ger-augsburg",
+          "name": "FC Augsburg"
+        },
+        {
+          "id": "ger-mainz",
+          "name": "1. FSV Mainz 05"
+        },
+        {
+          "id": "ger-union",
+          "name": "1. FC Union Berlin"
+        },
+        {
+          "id": "ger-gladbach",
+          "name": "Borussia Mönchengladbach"
+        },
+        {
+          "id": "ger-hamburg",
+          "name": "Hamburger SV"
+        },
+        {
+          "id": "ger-koln",
+          "name": "1. FC Köln"
+        },
+        {
+          "id": "ger-werder",
+          "name": "SV Werder Bremen"
+        },
+        {
+          "id": "ger-schalke",
+          "name": "FC Schalke 04"
+        },
+        {
+          "id": "ger-elversberg",
+          "name": "SV Elversberg"
+        },
+        {
+          "id": "ger-paderborn",
+          "name": "SC Paderborn 07"
+        }
+      ]
+    },
+    {
+      "id": "ita-serie-a",
+      "name": "Serie A Enilive",
+      "countryCode": "ITA",
+      "countryName": "Italy",
+      "season": "2026/27",
+      "format": "double_round_robin",
+      "teamCount": 20,
+      "matchesPerTeam": 38,
+      "pointsForWin": 3,
+      "pointsForDraw": 1,
+      "source": "https://www.legaseriea.it/serie-a",
+      "clubs": [
+        {
+          "id": "ita-atalanta",
+          "name": "Atalanta"
+        },
+        {
+          "id": "ita-bologna",
+          "name": "Bologna"
+        },
+        {
+          "id": "ita-cagliari",
+          "name": "Cagliari"
+        },
+        {
+          "id": "ita-como",
+          "name": "Como"
+        },
+        {
+          "id": "ita-fiorentina",
+          "name": "Fiorentina"
+        },
+        {
+          "id": "ita-frosinone",
+          "name": "Frosinone"
+        },
+        {
+          "id": "ita-genoa",
+          "name": "Genoa"
+        },
+        {
+          "id": "ita-inter",
+          "name": "Inter"
+        },
+        {
+          "id": "ita-juventus",
+          "name": "Juventus"
+        },
+        {
+          "id": "ita-lazio",
+          "name": "Lazio"
+        },
+        {
+          "id": "ita-lecce",
+          "name": "Lecce"
+        },
+        {
+          "id": "ita-milan",
+          "name": "AC Milan"
+        },
+        {
+          "id": "ita-monza",
+          "name": "Monza"
+        },
+        {
+          "id": "ita-napoli",
+          "name": "Napoli"
+        },
+        {
+          "id": "ita-parma",
+          "name": "Parma"
+        },
+        {
+          "id": "ita-roma",
+          "name": "Roma"
+        },
+        {
+          "id": "ita-sassuolo",
+          "name": "Sassuolo"
+        },
+        {
+          "id": "ita-torino",
+          "name": "Torino"
+        },
+        {
+          "id": "ita-udinese",
+          "name": "Udinese"
+        },
+        {
+          "id": "ita-venezia",
+          "name": "Venezia"
+        }
+      ]
+    },
+    {
+      "id": "fra-ligue-1",
+      "name": "Ligue 1 McDonald's",
+      "countryCode": "FRA",
+      "countryName": "France",
+      "season": "2026/27",
+      "format": "double_round_robin",
+      "teamCount": 18,
+      "matchesPerTeam": 34,
+      "pointsForWin": 3,
+      "pointsForDraw": 1,
+      "source": "https://www.lfp.fr/article/ligue-1-mc-donald-s-le-calendrier-de-la-saison-2026-2027",
+      "clubs": [
+        {
+          "id": "fra-angers",
+          "name": "Angers SCO"
+        },
+        {
+          "id": "fra-auxerre",
+          "name": "AJ Auxerre"
+        },
+        {
+          "id": "fra-brest",
+          "name": "Stade Brestois 29"
+        },
+        {
+          "id": "fra-le-havre",
+          "name": "Le Havre AC"
+        },
+        {
+          "id": "fra-le-mans",
+          "name": "Le Mans FC"
+        },
+        {
+          "id": "fra-lens",
+          "name": "RC Lens"
+        },
+        {
+          "id": "fra-lorient",
+          "name": "FC Lorient"
+        },
+        {
+          "id": "fra-lille",
+          "name": "LOSC Lille"
+        },
+        {
+          "id": "fra-lyon",
+          "name": "Olympique Lyonnais"
+        },
+        {
+          "id": "fra-marseille",
+          "name": "Olympique de Marseille"
+        },
+        {
+          "id": "fra-monaco",
+          "name": "AS Monaco"
+        },
+        {
+          "id": "fra-nice",
+          "name": "OGC Nice"
+        },
+        {
+          "id": "fra-paris-fc",
+          "name": "Paris FC"
+        },
+        {
+          "id": "fra-psg",
+          "name": "Paris Saint-Germain"
+        },
+        {
+          "id": "fra-rennes",
+          "name": "Stade Rennais FC"
+        },
+        {
+          "id": "fra-strasbourg",
+          "name": "RC Strasbourg Alsace"
+        },
+        {
+          "id": "fra-toulouse",
+          "name": "Toulouse FC"
+        },
+        {
+          "id": "fra-troyes",
+          "name": "ESTAC Troyes"
+        }
+      ]
     }
   ],
   "playerSquads": {
