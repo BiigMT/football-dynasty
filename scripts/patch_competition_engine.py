@@ -234,11 +234,14 @@ patch('test/career_test.dart', "  test('world generation is deterministic', () {
     expect(target.clubId, c.userClubId);
   });
 
-  test('world generation is deterministic', () {""") """  test('real-world competition sizes generate complete independent leagues', () {
+  test('world generation is deterministic', () {""")
+
+patch('test/career_test.dart', "  test('world generation is deterministic', () {", """  test('real-world competition sizes generate complete independent leagues', () {
     for (final competition in RealWorldCompetitions.all) {
       final c = Career.newGame(managerName: 'Tester', userClubId: competition.clubs.first.id, seed: 20261111, competitionId: competition.id, includeAllCompetitions: true);
       expect(c.competitionName, competition.name);
-      expect(c.clubs.length, RealWorldCompetitions.all.fold<int>(0, (sum, item) => sum + item.teamCount));\n      expect(c.competitionClubIds.length, competition.teamCount);
+      expect(c.clubs.length, RealWorldCompetitions.all.fold<int>(0, (sum, item) => sum + item.teamCount));
+      expect(c.competitionClubIds.length, competition.teamCount);
       expect(c.players.length, c.clubs.length * 24 + 80);
       expect(c.totalMatchdays, competition.matchesPerTeam);
       expect(c.fixtures.length, competition.teamCount * competition.matchesPerTeam ~/ 2);
@@ -251,7 +254,6 @@ patch('test/career_test.dart', "  test('world generation is deterministic', () {
   });
 
   test('world generation is deterministic', () {""")
-
 patch('lib/domain/career.dart', "  String competitionName;\n  int season;", "  String competitionName;\n  List<String> competitionClubIds;\n  int season;")
 patch('lib/domain/career.dart', "    required this.competitionName,\n    required this.season,", "    required this.competitionName,\n    required this.competitionClubIds,\n    required this.season,")
 patch('lib/domain/career.dart', "    String competitionId = 'fictional-demo',\n  }) {", "    String competitionId = 'fictional-demo',\n    bool includeAllCompetitions = false,\n  }) {")
