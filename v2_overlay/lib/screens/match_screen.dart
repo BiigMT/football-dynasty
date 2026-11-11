@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'dart:ui' show FontFeature;
 import '../domain/career.dart';
 import '../domain/models.dart';
 import '../state/game_controller.dart';
@@ -50,15 +51,46 @@ class _MatchScreenState extends State<MatchScreen> {
         if (!finished) IconButton(onPressed: () { timer?.cancel(); setState(() => shown = events.length); }, icon: const Icon(Icons.skip_next)),
       ]),
       body: Column(children: [
-        Container(padding: const EdgeInsets.all(14), decoration: const BoxDecoration(
-          gradient: LinearGradient(colors: [Color(0xFF19364A), Color(0xFF0B1725)], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+        Container(
+          padding: const EdgeInsets.fromLTRB(14, 12, 14, 16),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft, end: Alignment.bottomRight,
+              colors: [Color(0xFF203D52), Color(0xFF101F31), Color(0xFF091522)],
+            ),
+            border: Border(bottom: BorderSide(color: AppTheme.green.withOpacity(.25))),
+            boxShadow: const [BoxShadow(color: Colors.black38, blurRadius: 16, offset: Offset(0, 5))],
+          ),
           child: Column(children: [
-            Text(finished ? 'FULL TIME' : minute == 0 ? 'PRE-MATCH' : 'LEAGUE · LIVE',
-              style: const TextStyle(color: AppTheme.green, fontSize: 9, fontWeight: FontWeight.w900, letterSpacing: 2)),
-            const SizedBox(height: 10),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Container(width: 6, height: 6, decoration: BoxDecoration(
+                color: finished ? AppTheme.gold : AppTheme.green, shape: BoxShape.circle,
+                boxShadow: [BoxShadow(color: (finished ? AppTheme.gold : AppTheme.green).withOpacity(.65), blurRadius: 7)],
+              )),
+              const SizedBox(width: 7),
+              Text(finished ? 'FULL TIME' : minute == 0 ? 'PRE-MATCH' : 'LIVE MATCH',
+                style: const TextStyle(color: AppTheme.green, fontSize: 9, fontWeight: FontWeight.w900, letterSpacing: 2)),
+              const SizedBox(width: 7),
+              const Text('•  FOOTBALL DYNASTY', style: TextStyle(color: Colors.white38, fontSize: 8, letterSpacing: .8)),
+            ]),
+            const SizedBox(height: 12),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, crossAxisAlignment: CrossAxisAlignment.center, children: [
               _Team(club: home),
-              Column(children: [Text('$hg - $ag', style: const TextStyle(fontSize: 34, fontWeight: FontWeight.w900)), Text(finished ? '90 MIN' : '$minute MIN', style: const TextStyle(color: Colors.white54, fontSize: 9))]),
+              Column(mainAxisSize: MainAxisSize.min, children: [
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 350),
+                  transitionBuilder: (child, animation) => ScaleTransition(scale: animation, child: child),
+                  child: Text('$hg  -  $ag', key: ValueKey('$hg-$ag'),
+                    style: const TextStyle(fontSize: 35, height: 1, fontWeight: FontWeight.w900, letterSpacing: 1.2)),
+                ),
+                const SizedBox(height: 7),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(color: Colors.white.withOpacity(.08), borderRadius: BorderRadius.circular(20)),
+                  child: Text(finished ? '90:00' : minute == 0 ? '00:00' : "$minute:00",
+                    style: const TextStyle(color: AppTheme.green, fontSize: 10, fontWeight: FontWeight.w900, fontFeatures: [FontFeature.tabularFigures()])),
+                ),
+              ]),
               _Team(club: away),
             ]),
           ]),
