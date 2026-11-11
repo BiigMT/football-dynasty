@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "datasetId": "football-dynasty-world-2026-27",
+  "season": "2026/27",
+  "lastVerified": "2026-11-11",
+  "competitions": [
+    {
+      "id": "eng-premier-league",
+      "name": "Premier League",
+      "countryCode": "ENG",
+      "countryName": "England",
+      "season": "2026/27",
+      "format": "double_round_robin",
+      "teamCount": 20,
+      "matchesPerTeam": 38,
+      "pointsForWin": 3,
+      "pointsForDraw": 1,
+      "source": "https://www.premierleague.com/en/news/4365156",
+      "clubs": [
+        {"id":"eng-bou","name":"AFC Bournemouth"},
+        {"id":"eng-ars","name":"Arsenal"},
+        {"id":"eng-avl","name":"Aston Villa"},
+        {"id":"eng-bre","name":"Brentford"},
+        {"id":"eng-bha","name":"Brighton & Hove Albion"},
+        {"id":"eng-che","name":"Chelsea"},
+        {"id":"eng-cov","name":"Coventry City"},
+        {"id":"eng-cry","name":"Crystal Palace"},
+        {"id":"eng-eve","name":"Everton"},
+        {"id":"eng-ful","name":"Fulham"},
+        {"id":"eng-hul","name":"Hull City"},
+        {"id":"eng-ips","name":"Ipswich Town"},
+        {"id":"eng-lee","name":"Leeds United"},
+        {"id":"eng-liv","name":"Liverpool"},
+        {"id":"eng-mci","name":"Manchester City"},
+        {"id":"eng-mun","name":"Manchester United"},
+        {"id":"eng-new","name":"Newcastle United"},
+        {"id":"eng-nfo","name":"Nottingham Forest"},
+        {"id":"eng-sun","name":"Sunderland"},
+        {"id":"eng-tot","name":"Tottenham Hotspur"}
+      ]
+    },
+    {
+      "id": "zam-mtn-super-league",
+      "name": "MTN Super League",
+      "countryCode": "ZAM",
+      "countryName": "Zambia",
+      "season": "Transitional 2026",
+      "format": "two_streams_championship_final",
+      "teamCount": 20,
+      "source": "https://zpl.co.zm/",
+      "formatSource": "https://zambianfootball.co.zm/zpl-title-to-be-decided-by-championship-match-in-2026-transition-season/",
+      "streams": [
+        {
+          "id": "zam-mtn-stream-a",
+          "name": "Stream A",
+          "matchesPerTeam": 18,
+          "clubs": [
+            {"id":"zam-nkana","name":"Nkana FC"},
+            {"id":"zam-konkola","name":"Konkola Blades"},
+            {"id":"zam-muza","name":"FC MUZA"},
+            {"id":"zam-zanaco","name":"ZANACO FC"},
+            {"id":"zam-power","name":"Power Dynamos FC"},
+            {"id":"zam-nchanga","name":"Nchanga Rangers"},
+            {"id":"zam-kansanshi","name":"Kansanshi Dynamos"},
+            {"id":"zam-trident","name":"Trident FC"},
+            {"id":"zam-napsa","name":"NAPSA Stars"},
+            {"id":"zam-makeni","name":"Makeni All Stars"}
+          ]
+        },
+        {
+          "id": "zam-mtn-stream-b",
+          "name": "Stream B",
+          "matchesPerTeam": 18,
+          "clubs": [
+            {"id":"zam-red-arrows","name":"Red Arrows"},
+            {"id":"zam-kabwe-warriors","name":"Kabwe Warriors"},
+            {"id":"zam-green-eagles","name":"Green Eagles"},
+            {"id":"zam-mufulira","name":"Mufulira Wanderers"},
+            {"id":"zam-zesco","name":"ZESCO United"},
+            {"id":"zam-green-buffaloes","name":"Green Buffaloes"},
+            {"id":"zam-nkwazi","name":"Nkwazi FC"},
+            {"id":"zam-mutondo","name":"Mutondo Stars"},
+            {"id":"zam-chirundu","name":"Chirundu United"},
+            {"id":"zam-roan","name":"Roan United"}
+          ]
+        }
+      ],
+      "championshipFinal": {
+        "name": "MTN Super League Championship Match",
+        "participants": "Stream A winner versus Stream B winner",
+        "source": "https://zambianfootball.co.zm/zpl-title-to-be-decided-by-championship-match-in-2026-transition-season/"
+      }
+    }
+  ],
+  "playerSquads": {
+    "status": "not_yet_added",
+    "note": "Do not generate or invent real-player records. Add player data only after verification against official club or league squad sources."
+  }
+}
