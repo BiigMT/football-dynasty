@@ -1,6 +1,9 @@
 name: Build Football Dynasty APK
 
 on:
+  push:
+    branches:
+      - football-dynasty-v2
   workflow_dispatch:
 
 jobs:
