@@ -574,10 +574,350 @@
           "name": "ESTAC Troyes"
         }
       ]
+    },
+    {
+      "id": "rsa-betway-premiership",
+      "name": "Betway Premiership",
+      "countryCode": "RSA",
+      "countryName": "South Africa",
+      "season": "2026/27",
+      "format": "double_round_robin",
+      "teamCount": 16,
+      "matchesPerTeam": 30,
+      "pointsForWin": 3,
+      "pointsForDraw": 1,
+      "source": "https://www.psl.co.za/news/article/5615294-psl-confirms-the-202627-season-calend",
+      "clubs": [
+        {
+          "id": "rsa-amazulu",
+          "name": "AmaZulu FC"
+        },
+        {
+          "id": "rsa-chippa",
+          "name": "Chippa United"
+        },
+        {
+          "id": "rsa-durban-city",
+          "name": "Durban City"
+        },
+        {
+          "id": "rsa-golden-arrows",
+          "name": "Golden Arrows"
+        },
+        {
+          "id": "rsa-kaizer-chiefs",
+          "name": "Kaizer Chiefs"
+        },
+        {
+          "id": "rsa-kruger-united",
+          "name": "Kruger United"
+        },
+        {
+          "id": "rsa-mamelodi-sundowns",
+          "name": "Mamelodi Sundowns"
+        },
+        {
+          "id": "rsa-marumo-gallants",
+          "name": "Marumo Gallants"
+        },
+        {
+          "id": "rsa-milford",
+          "name": "Milford FC"
+        },
+        {
+          "id": "rsa-orlando-pirates",
+          "name": "Orlando Pirates"
+        },
+        {
+          "id": "rsa-polokwane-city",
+          "name": "Polokwane City"
+        },
+        {
+          "id": "rsa-richards-bay",
+          "name": "Richards Bay"
+        },
+        {
+          "id": "rsa-sekhukhune",
+          "name": "Sekhukhune United"
+        },
+        {
+          "id": "rsa-siwelele",
+          "name": "Siwelele"
+        },
+        {
+          "id": "rsa-stellenbosch",
+          "name": "Stellenbosch FC"
+        },
+        {
+          "id": "rsa-ts-galaxy",
+          "name": "TS Galaxy"
+        }
+      ]
+    },
+    {
+      "id": "gha-premier-league",
+      "name": "Ghana Premier League",
+      "countryCode": "GHA",
+      "countryName": "Ghana",
+      "season": "2026/27",
+      "format": "double_round_robin",
+      "teamCount": 18,
+      "matchesPerTeam": 34,
+      "pointsForWin": 3,
+      "pointsForDraw": 1,
+      "source": "https://gpl.com.gh/teams",
+      "clubs": [
+        {
+          "id": "gha-aduana",
+          "name": "Aduana Stars"
+        },
+        {
+          "id": "gha-kotoko",
+          "name": "Asante Kotoko"
+        },
+        {
+          "id": "gha-basake-holy-stars",
+          "name": "Basake Holy Stars"
+        },
+        {
+          "id": "gha-bechem",
+          "name": "Bechem United"
+        },
+        {
+          "id": "gha-berekum-chelsea",
+          "name": "Berekum Chelsea"
+        },
+        {
+          "id": "gha-bibiani-gold-stars",
+          "name": "Bibiani Gold Stars"
+        },
+        {
+          "id": "gha-debibi",
+          "name": "Debibi United FC"
+        },
+        {
+          "id": "gha-dreams",
+          "name": "Dreams FC"
+        },
+        {
+          "id": "gha-ashantigold",
+          "name": "FC Ashantigold"
+        },
+        {
+          "id": "gha-heart-of-lions",
+          "name": "Heart of Lions"
+        },
+        {
+          "id": "gha-hearts-of-oak",
+          "name": "Hearts of Oak"
+        },
+        {
+          "id": "gha-karela",
+          "name": "Karela United"
+        },
+        {
+          "id": "gha-medeama",
+          "name": "Medeama SC"
+        },
+        {
+          "id": "gha-port-city",
+          "name": "Port City FC"
+        },
+        {
+          "id": "gha-samartex",
+          "name": "Samartex FC"
+        },
+        {
+          "id": "gha-swedru-all-blacks",
+          "name": "Swedru All Blacks"
+        },
+        {
+          "id": "gha-vision",
+          "name": "Vision FC"
+        },
+        {
+          "id": "gha-young-apostles",
+          "name": "Young Apostles"
+        }
+      ]
+    },
+    {
+      "id": "nga-npfl",
+      "name": "Nigeria Premier Football League",
+      "countryCode": "NGA",
+      "countryName": "Nigeria",
+      "season": "2026/27",
+      "format": "double_round_robin",
+      "teamCount": 20,
+      "matchesPerTeam": 38,
+      "pointsForWin": 3,
+      "pointsForDraw": 1,
+      "source": "https://npfl.com.ng/clubs/",
+      "clubs": [
+        {
+          "id": "nga-niger-tornadoes",
+          "name": "Niger Tornadoes FC"
+        },
+        {
+          "id": "nga-kun-khalifat",
+          "name": "Kun Khalifat FC"
+        },
+        {
+          "id": "nga-nasarawa-united",
+          "name": "Nasarawa United FC"
+        },
+        {
+          "id": "nga-ikorodu-city",
+          "name": "Ikorodu City FC"
+        },
+        {
+          "id": "nga-katsina-united",
+          "name": "Katsina United FC"
+        },
+        {
+          "id": "nga-sporting-lagos",
+          "name": "Sporting Lagos FC"
+        },
+        {
+          "id": "nga-kano-pillars",
+          "name": "Kano Pillars FC"
+        },
+        {
+          "id": "nga-inter-lagos",
+          "name": "Inter Lagos FC"
+        },
+        {
+          "id": "nga-rangers-international",
+          "name": "Rangers International FC"
+        },
+        {
+          "id": "nga-warri-wolves",
+          "name": "Warri Wolves FC"
+        },
+        {
+          "id": "nga-doma-united",
+          "name": "Doma United FC"
+        },
+        {
+          "id": "nga-enyimba",
+          "name": "Enyimba FC"
+        },
+        {
+          "id": "nga-rivers-united",
+          "name": "Rivers United FC"
+        },
+        {
+          "id": "nga-barau",
+          "name": "Barau FC"
+        },
+        {
+          "id": "nga-ranchers-bees",
+          "name": "Ranchers Bees FC"
+        },
+        {
+          "id": "nga-bendel-insurance",
+          "name": "Bendel Insurance FC"
+        },
+        {
+          "id": "nga-plateau-united",
+          "name": "Plateau United FC"
+        },
+        {
+          "id": "nga-shooting-stars",
+          "name": "Shooting Stars SC"
+        },
+        {
+          "id": "nga-kwara-united",
+          "name": "Kwara United FC"
+        },
+        {
+          "id": "nga-abia-warriors",
+          "name": "Abia Warriors FC"
+        }
+      ]
+    },
+    {
+      "id": "mar-botola-pro",
+      "name": "Botola Pro 1 Inwi",
+      "countryCode": "MAR",
+      "countryName": "Morocco",
+      "season": "2026/27",
+      "format": "double_round_robin",
+      "teamCount": 16,
+      "matchesPerTeam": 30,
+      "pointsForWin": 3,
+      "pointsForDraw": 1,
+      "source": "https://lnfp.ma/?wpmobileexternal=true",
+      "clubs": [
+        {
+          "id": "mar-as-far",
+          "name": "AS FAR"
+        },
+        {
+          "id": "mar-cod-meknes",
+          "name": "COD Meknès"
+        },
+        {
+          "id": "mar-dh-el-jadida",
+          "name": "DH El Jadida"
+        },
+        {
+          "id": "mar-fus-rabat",
+          "name": "FUS Rabat"
+        },
+        {
+          "id": "mar-hus-agadir",
+          "name": "HUS Agadir"
+        },
+        {
+          "id": "mar-ir-tanger",
+          "name": "IR Tanger"
+        },
+        {
+          "id": "mar-kac-marrakech",
+          "name": "KAC Marrakech"
+        },
+        {
+          "id": "mar-mas-fes",
+          "name": "MAS Fes"
+        },
+        {
+          "id": "mar-ma-tetouan",
+          "name": "MA Tétouan"
+        },
+        {
+          "id": "mar-raja-ca",
+          "name": "Raja CA"
+        },
+        {
+          "id": "mar-rca-zemamra",
+          "name": "RCA Zemamra"
+        },
+        {
+          "id": "mar-rs-berkane",
+          "name": "RS Berkane"
+        },
+        {
+          "id": "mar-us-amal-tiznit",
+          "name": "US Amal Tiznit"
+        },
+        {
+          "id": "mar-uts-rabat",
+          "name": "UTS Rabat"
+        },
+        {
+          "id": "mar-wydad-ac",
+          "name": "Wydad AC"
+        },
+        {
+          "id": "mar-ws-temara",
+          "name": "WS Témara"
+        }
+      ]
     }
   ],
   "playerSquads": {
     "status": "not_yet_added",
-    "note": "Do not generate or invent real-player records. Add player data only after verification against official club or league squad sources."
+    "note": "No real-player records are included until each first-team squad, player identity, position, nationality and age can be checked against an official club or league source. Do not replace this with invented names."
   }
 }
