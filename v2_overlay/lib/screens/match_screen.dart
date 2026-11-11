@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../domain/career.dart';
 import '../domain/models.dart';
@@ -63,12 +64,29 @@ class _MatchScreenState extends State<MatchScreen> {
             ]),
           ]),
         ),
-        Padding(padding: const EdgeInsets.all(12), child: AspectRatio(aspectRatio: 1.5,
+        Padding(padding: const EdgeInsets.all(12), child: AspectRatio(aspectRatio: 1.12,
           child: ClipRRect(borderRadius: BorderRadius.circular(14), child: CustomPaint(
             painter: _PitchPainter(),
             child: Stack(children: [
               for (var i = 0; i < r.homeXI.length && i < 11; i++) _PlayerDot(index: i, home: true),
               for (var i = 0; i < r.awayXI.length && i < 11; i++) _PlayerDot(index: i, home: false),
+              AnimatedAlign(
+                duration: const Duration(milliseconds: 650),
+                curve: Curves.easeInOutCubic,
+                alignment: Alignment(
+                  ((minute * 37) % 80) / 40 - 1,
+                  ((minute * 19) % 60) / 30 - 1,
+                ),
+                child: Container(
+                  width: 13, height: 13,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: const RadialGradient(colors: [Colors.white, Color(0xFFB9C5D1), Color(0xFF596777)]),
+                    boxShadow: [BoxShadow(color: Colors.black.withOpacity(.55), blurRadius: 7, offset: const Offset(2, 3))],
+                    border: Border.all(color: Colors.white, width: 1),
+                  ),
+                ),
+              ),
               if (visible.isNotEmpty && visible.last.type == EventType.goal)
                 const Align(alignment: Alignment.bottomCenter, child: Padding(padding: EdgeInsets.all(8), child: Text('⚽ GOAL!', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900)))),
             ]),
