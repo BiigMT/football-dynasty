@@ -152,7 +152,7 @@ patch('lib/state/game_controller.dart', """  Future<void> startCareer(int s, Str
     career = Career.newGame(managerName: manager, userClubId: clubId, seed: seed);""", """  Future<void> startCareer(int s, String manager, String clubId, int seed, {String competitionId = 'fictional-demo'}) async {
     career = Career.newGame(managerName: manager, userClubId: clubId, seed: seed, competitionId: competitionId);""")
 
-patch('lib/screens/competitions_screen.dart', """          child: ScreenHeader(kicker: 'FICTIONAL LEAGUE', title: 'Premier Division ${c.seasonLabel}'),""", """          child: ScreenHeader(kicker: 'LEAGUE COMPETITION', title: '${c.competitionName} \${c.seasonLabel}'),""")
+patch('lib/screens/competitions_screen.dart', """          child: ScreenHeader(kicker: 'FICTIONAL LEAGUE', title: 'Premier Division ${c.seasonLabel}'),""", """          child: ScreenHeader(kicker: 'LEAGUE COMPETITION', title: '${c.competitionName} ${c.seasonLabel}'),""")
 
 patch('lib/screens/dashboard_screen.dart', """            const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('FOOTBALL DYNASTY', style: TextStyle(fontSize: 11, letterSpacing: 2.0, color: AppTheme.green, fontWeight: FontWeight.w900)),
@@ -235,7 +235,7 @@ class _NewCareerScreenState extends State<NewCareerScreen> {
         ])),
         Padding(padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5), child: Row(children: [
           const Expanded(child: Text('3. Choose your club', style: TextStyle(fontWeight: FontWeight.w900))),
-          Text('\${clubs.length} CLUBS', style: const TextStyle(color: AppTheme.green, fontSize: 10, fontWeight: FontWeight.w900)),
+          Text('${clubs.length} CLUBS', style: const TextStyle(color: AppTheme.green, fontSize: 10, fontWeight: FontWeight.w900)),
         ])),
         Expanded(child: ListView.builder(padding: const EdgeInsets.fromLTRB(18, 4, 18, 12), itemCount: clubs.length, itemBuilder: (context, index) {
           final source = clubs[index];
@@ -245,7 +245,7 @@ class _NewCareerScreenState extends State<NewCareerScreen> {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16), side: BorderSide(color: selectedClub == club.id ? AppTheme.green : Colors.transparent, width: 2)),
             child: ListTile(onTap: () => setState(() => selectedClub = club.id), leading: ClubCrest(club.shortName, club.colorValue),
               title: Text(club.name, style: const TextStyle(fontWeight: FontWeight.w800)),
-              subtitle: Text('Squad strength \${average.toStringAsFixed(0)} • \${fmtMoney(club.transferBudget)} budget'),
+              subtitle: Text('Squad strength ${average.toStringAsFixed(0)} • ${fmtMoney(club.transferBudget)} budget'),
               trailing: selectedClub == club.id ? const Icon(Icons.check_circle, color: AppTheme.green) : const Icon(Icons.circle_outlined, color: Colors.white24)),
           ));
         })),
