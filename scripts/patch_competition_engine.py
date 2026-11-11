@@ -4,8 +4,25 @@ import json, sys, re
 root = Path(sys.argv[1])
 workspace = Path(sys.argv[2]) if len(sys.argv) > 2 else root
 data = json.loads((workspace / 'data/real_world/competitions_2026_27.json').read_text(encoding='utf-8'))
-comps = [c for c in data['competitions'] if c.get('format') == 'double_round_robin']
-priority = {'RSA': 0, 'GHA': 1, 'NGA': 2, 'MAR': 3}
+comps = []
+for source in data['competitions']:
+    if source.get('format') == 'double_round_robin':
+        comps.append(source)
+    elif source.get('format') == 'two_streams_championship_final':
+        for stream in source.get('streams', []):
+            clubs = stream.get('clubs', [])
+            comps.append({
+                'id': stream['id'],
+                'name': f"{source['name']} · {stream['name']} (Transitional 2026)",
+                'countryCode': source['countryCode'],
+                'countryName': source['countryName'],
+                'season': source['season'],
+                'format': 'double_round_robin',
+                'teamCount': len(clubs),
+                'matchesPerTeam': stream['matchesPerTeam'],
+                'clubs': clubs,
+            })
+priority = {'ZAM': 0, 'RSA': 1, 'GHA': 2, 'NGA': 3, 'MAR': 4}
 comps.sort(key=lambda c: (priority.get(c['countryCode'], 10), c['countryName']))
 def q(s): return json.dumps(s, ensure_ascii=False)
 
@@ -223,7 +240,7 @@ class _NewCareerScreenState extends State<NewCareerScreen> {
           ));
         })),
         Container(padding: const EdgeInsets.fromLTRB(18, 10, 18, 18), decoration: BoxDecoration(color: AppTheme.panel, border: Border(top: BorderSide(color: Colors.white.withOpacity(.08)))), child: Column(children: [
-          const Text('Real club identities and league formats are included. Player squads and ratings are generated placeholders until verified real-world squad packs are added.', style: TextStyle(color: Colors.white54, fontSize: 10), textAlign: TextAlign.center),
+          const Text('Real club identities are included. Player squads and ratings are generated placeholders until verified real-world squad packs are added. Zambia's two transition streams are playable separately; the championship final is not yet simulated.', style: TextStyle(color: Colors.white54, fontSize: 10), textAlign: TextAlign.center),
           const SizedBox(height: 9),
           SizedBox(width: double.infinity, child: FilledButton(onPressed: selectedClub == null || starting ? null : () async {
             setState(() => starting = true);
