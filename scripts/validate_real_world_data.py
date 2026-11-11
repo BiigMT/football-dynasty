@@ -44,4 +44,18 @@ assert zambia is not None, "Zambia MTN Super League is missing"
 assert len(zambia.get("streams", [])) == 2, "Zambia transitional season must have two streams"
 assert all(len(s.get("clubs", [])) == 10 for s in zambia["streams"]), "Each Zambia stream must contain 10 clubs"
 
+expected_leagues = {
+    "esp-la-liga": 20,
+    "ger-bundesliga": 18,
+    "ita-serie-a": 20,
+    "fra-ligue-1": 18,
+}
+for league_id, expected_count in expected_leagues.items():
+    league = next((c for c in competitions if c["id"] == league_id), None)
+    assert league is not None, f"Missing launch league: {league_id}"
+    assert len(league.get("clubs", [])) == expected_count, (
+        f"{league_id}: expected {expected_count} clubs, found {len(league.get('clubs', []))}"
+    )
+
 print(f"Real-world dataset valid: {len(competitions)} competitions, {len(club_ids)} clubs.")
+
