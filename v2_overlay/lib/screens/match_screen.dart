@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../domain/career.dart';
 import '../domain/models.dart';
@@ -157,18 +156,45 @@ class _PitchPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
-    canvas.drawRect(rect, Paint()..shader = const LinearGradient(colors: [Color(0xFF17613F), Color(0xFF0F5035), Color(0xFF17613F)]).createShader(rect));
-    final stripe = Paint()..color = Colors.white.withOpacity(.035);
-    for (var i = 0; i < 8; i++) { if (i.isEven) canvas.drawRect(Rect.fromLTWH(i * size.width / 8, 0, size.width / 8, size.height), stripe); }
-    final p = Paint()..color = Colors.white.withOpacity(.75)..style = PaintingStyle.stroke..strokeWidth = 1.1;
-    const pad = 9.0;
-    canvas.drawRect(Rect.fromLTWH(pad, pad, size.width - 2 * pad, size.height - 2 * pad), p);
-    canvas.drawLine(Offset(size.width / 2, pad), Offset(size.width / 2, size.height - pad), p);
-    canvas.drawCircle(Offset(size.width / 2, size.height / 2), size.height * .13, p);
-    canvas.drawRect(Rect.fromLTWH(pad, size.height * .25, size.width * .16, size.height * .5), p);
-    canvas.drawRect(Rect.fromLTWH(size.width - pad - size.width * .16, size.height * .25, size.width * .16, size.height * .5), p);
-    canvas.drawRect(Rect.fromLTWH(pad, size.height * .37, size.width * .06, size.height * .26), p);
-    canvas.drawRect(Rect.fromLTWH(size.width - pad - size.width * .06, size.height * .37, size.width * .06, size.height * .26), p);
+    canvas.drawRect(rect, Paint()..shader = const LinearGradient(
+      begin: Alignment.topCenter, end: Alignment.bottomCenter,
+      colors: [Color(0xFF071B19), Color(0xFF102E25), Color(0xFF071B19)],
+    ).createShader(rect));
+    final pitch = Path()
+      ..moveTo(size.width * .18, size.height * .035)
+      ..lineTo(size.width * .82, size.height * .035)
+      ..lineTo(size.width * .98, size.height * .97)
+      ..lineTo(size.width * .02, size.height * .97)
+      ..close();
+    canvas.drawPath(pitch, Paint()..shader = const LinearGradient(
+      colors: [Color(0xFF258354), Color(0xFF12613E), Color(0xFF0B4A31)],
+    ).createShader(rect));
+    final stripe = Paint()..color = Colors.white.withOpacity(.045);
+    for (var i = 0; i < 8; i++) {
+      if (i.isEven) {
+        final x = size.width * (.18 + i * .08);
+        canvas.drawPath(Path()..moveTo(x, size.height * .04)
+          ..lineTo(x + size.width * .075, size.height * .04)
+          ..lineTo(size.width * .98 - i * 2, size.height * .97)
+          ..lineTo(size.width * .02 + i * 2, size.height * .97)..close(), stripe);
+      }
+    }
+    final p = Paint()..color = Colors.white.withOpacity(.78)
+      ..style = PaintingStyle.stroke..strokeWidth = 1.15;
+    final left = size.width * .18, right = size.width * .82;
+    final top = size.height * .035, bottom = size.height * .97;
+    canvas.drawPath(Path()..moveTo(left, top)..lineTo(right, top)
+      ..lineTo(size.width * .98, bottom)..lineTo(size.width * .02, bottom)..close(), p);
+    canvas.drawLine(Offset(size.width * .5, top), Offset(size.width * .5, bottom), p);
+    canvas.drawOval(Rect.fromCenter(center: Offset(size.width * .5, size.height * .5),
+      width: size.width * .27, height: size.height * .18), p);
+    canvas.drawRect(Rect.fromLTRB(size.width * .35, top, size.width * .65, size.height * .19), p);
+    canvas.drawRect(Rect.fromLTRB(size.width * .35, size.height * .81, size.width * .65, bottom), p);
+    canvas.drawRect(Rect.fromLTRB(size.width * .43, top, size.width * .57, size.height * .10), p);
+    canvas.drawRect(Rect.fromLTRB(size.width * .43, size.height * .90, size.width * .57, bottom), p);
+    final glow = Paint()..shader = RadialGradient(colors: [Colors.white.withOpacity(.12), Colors.transparent])
+      .createShader(Rect.fromCircle(center: Offset(size.width * .5, size.height * .1), radius: size.width * .7));
+    canvas.drawRect(rect, glow);
   }
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
