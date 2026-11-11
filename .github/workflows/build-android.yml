@@ -1,4 +1,5 @@
 name: Build Football Dynasty APK
+# Keep the branch buildable: validate generated Dart, tests, and release APK on every update.
 
 on:
   push:
