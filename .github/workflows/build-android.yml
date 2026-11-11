@@ -83,3 +83,5 @@ jobs:
           name: football-dynasty-apk-v2
           path: ${{ env.PROJECT_DIR }}/build/app/outputs/flutter-apk/app-release.apk
           retention-days: 30
+
+# Rebuild after dashboard patch compatibility fix.
