@@ -43,6 +43,7 @@ zambia = next((c for c in competitions if c["id"] == "zam-mtn-super-league"), No
 assert zambia is not None, "Zambia MTN Super League is missing"
 assert len(zambia.get("streams", [])) == 2, "Zambia transitional season must have two streams"
 assert all(len(s.get("clubs", [])) == 10 for s in zambia["streams"]), "Each Zambia stream must contain 10 clubs"
+assert all(s.get("matchesPerTeam") == 18 for s in zambia["streams"]), "Each Zambia stream must play 18 matches per team"
 
 expected_leagues = {
     "esp-la-liga": 20,
@@ -63,6 +64,7 @@ for league_id, expected_count in expected_leagues.items():
 
 
 expected_matches = {
+    "eng-premier-league": 38,
     "esp-la-liga": 38,
     "ger-bundesliga": 34,
     "ita-serie-a": 38,
