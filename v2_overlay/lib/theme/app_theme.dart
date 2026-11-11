@@ -4,7 +4,8 @@ class AppTheme {
   static const navy = Color(0xFF08111D);
   static const panel = Color(0xFF111F30);
   static const panelLight = Color(0xFF1B3045);
-  static const green = Color(0xFFB7F36B);
+  // The Dynasty interface now uses electric cyan as its signature accent.
+  static const green = Color(0xFF00E5FF);
   static const gold = Color(0xFFFFC857);
   static const muted = Color(0xFF91A2B7);
 
