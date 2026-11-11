@@ -232,6 +232,17 @@ patch('test/career_test.dart', "  test('world generation is deterministic', () {
 
   test('world generation is deterministic', () {""")
 
+patch('lib/domain/career.dart', "  String competitionName;\n  int season;", "  String competitionName;\n  List<String> competitionClubIds;\n  int season;")
+patch('lib/domain/career.dart', "    required this.competitionName,\n    required this.season,", "    required this.competitionName,\n    required this.competitionClubIds,\n    required this.season,")
+patch('lib/domain/career.dart', "    String competitionId = 'fictional-demo',\n  }) {", "    String competitionId = 'fictional-demo',\n    bool includeAllCompetitions = false,\n  }) {")
+patch('lib/domain/career.dart', "      competitionName: competition?.name ?? 'Dynasty Demo League',\n      season: startSeason,", "      competitionName: competition?.name ?? 'Dynasty Demo League',\n      competitionClubIds: competition == null ? clubs.keys.toList() : leagueClubIds,\n      season: startSeason,")
+patch('lib/domain/career.dart', "fixtures: FixtureGenerator.buildSeason(clubs.keys.toList(), startSeason, seed),", "fixtures: FixtureGenerator.buildSeason(competition == null ? clubs.keys.toList() : leagueClubIds, startSeason, seed),")
+patch('lib/domain/career.dart', "  List<lg.TableRow> get table => lg.League.table(fixtures, clubs, season);", "  List<lg.TableRow> get table => lg.League.table(fixtures, {for (final id in competitionClubIds) id: clubs[id]!}, season);")
+patch('lib/domain/career.dart', "final ranked = clubs.keys.toList()", "final ranked = competitionClubIds.toList()")
+patch('lib/domain/career.dart', "final prize = (clubs.length - pos) * 250000;", "final prize = (competitionClubIds.length - pos) * 250000;")
+patch('lib/domain/career.dart', "...FixtureGenerator.buildSeason(clubs.keys.toList(), season, seed),", "...FixtureGenerator.buildSeason(competitionClubIds, season, seed),")
+patch('lib/state/game_controller.dart', "career = Career.newGame(managerName: manager, userClubId: clubId, seed: seed, competitionId: competitionId);", "career = Career.newGame(managerName: manager, userClubId: clubId, seed: seed, competitionId: competitionId, includeAllCompetitions: true);")
+
 path = root / 'lib/screens/start_screen.dart'
 src = path.read_text(encoding='utf-8')
 src = re.sub(r"'All clubs, players and competitions are fictional generated data\. '\\s*'No real-world names, crests or kits are used\.'", "'Choose from real-world club and league identities. Player squads and ratings are generated placeholders until verified squad packs are added.'", src)
