@@ -2,7 +2,8 @@ from pathlib import Path
 import json, sys, re
 
 root = Path(sys.argv[1])
-data = json.loads((root / 'data/real_world/competitions_2026_27.json').read_text(encoding='utf-8'))
+workspace = Path(sys.argv[2]) if len(sys.argv) > 2 else root
+data = json.loads((workspace / 'data/real_world/competitions_2026_27.json').read_text(encoding='utf-8'))
 comps = [c for c in data['competitions'] if c.get('format') == 'double_round_robin']
 priority = {'RSA': 0, 'GHA': 1, 'NGA': 2, 'MAR': 3}
 comps.sort(key=lambda c: (priority.get(c['countryCode'], 10), c['countryName']))
