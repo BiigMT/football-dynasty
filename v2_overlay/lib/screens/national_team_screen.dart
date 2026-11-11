@@ -14,6 +14,8 @@ class NationalTeamScreen extends StatefulWidget {
 
 class _NationalTeamScreenState extends State<NationalTeamScreen> {
   String? selectedCode;
+  String playerSearch = '';
+  String rosterFilter = 'ALL';
 
   void _showResult(BuildContext context, ActionResult result) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -31,7 +33,15 @@ class _NationalTeamScreenState extends State<NationalTeamScreen> {
 
     final teamName = Career.nationalTeams[code] ?? code;
     final called = career.nationalCallups;
-    final players = career.eligibleNationalPlayers;
+    final allPlayers = career.eligibleNationalPlayers;
+    final players = allPlayers.where((player) {
+      final matchesSearch = player.name.toLowerCase().contains(playerSearch.trim().toLowerCase()) ||
+          player.position.toLowerCase().contains(playerSearch.trim().toLowerCase());
+      final matchesFilter = rosterFilter == 'ALL' ||
+          (rosterFilter == 'CALLED' && called.contains(player.id)) ||
+          (rosterFilter == 'AVAILABLE' && !called.contains(player.id));
+      return matchesSearch && matchesFilter;
+    }).toList();
 
     return Column(
       children: [
@@ -91,12 +101,38 @@ class _NationalTeamScreenState extends State<NationalTeamScreen> {
               const Text('PLAYER POOL', style: TextStyle(color: AppTheme.green, fontWeight: FontWeight.w900, fontSize: 11, letterSpacing: 1)),
               const SizedBox(height: 4),
               const Text('Select players from every club. Build your squad, choose your starting XI and appoint a captain.', style: TextStyle(color: Colors.white60, fontSize: 12)),
+              const SizedBox(height: 12),
+              TextField(
+                onChanged: (value) => setState(() => playerSearch = value),
+                decoration: InputDecoration(
+                  hintText: 'Search player or position…',
+                  prefixIcon: const Icon(Icons.search_rounded, size: 19),
+                  suffixIcon: playerSearch.isEmpty ? null : IconButton(
+                    onPressed: () => setState(() => playerSearch = ''),
+                    icon: const Icon(Icons.close_rounded, size: 17),
+                  ),
+                  isDense: true,
+                  filled: true,
+                  fillColor: AppTheme.panel,
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Wrap(spacing: 7, children: [
+                for (final filter in const ['ALL', 'CALLED', 'AVAILABLE'])
+                  ChoiceChip(
+                    label: Text(filter == 'ALL' ? 'ALL PLAYERS' : filter == 'CALLED' ? 'CALLED UP' : 'AVAILABLE'),
+                    selected: rosterFilter == filter,
+                    onSelected: (_) => setState(() => rosterFilter = filter),
+                    visualDensity: VisualDensity.compact,
+                  ),
+              ]),
             ],
           ),
         ),
         Expanded(
           child: players.isEmpty
-              ? const Center(child: Text('No eligible players are currently available.'))
+              ? Center(child: Text(playerSearch.isNotEmpty || rosterFilter != 'ALL' ? 'No players match this filter.' : 'No eligible players are currently available.'))
               : ListView.builder(
                   padding: const EdgeInsets.fromLTRB(14, 0, 14, 16),
                   itemCount: players.length,
