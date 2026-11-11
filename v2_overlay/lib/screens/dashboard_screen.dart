@@ -25,7 +25,15 @@ class DashboardScreen extends StatelessWidget {
     final suspended = squad.where((p) => p.suspendedMatches > 0).length;
     final expiring = squad.where((p) => p.contractYears <= 1).length;
     final fx = c.nextUserFixture;
-    return ListView(
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF101D2B), Color(0xFF080E17), Color(0xFF070B12)],
+        ),
+      ),
+      child: ListView(
       padding: const EdgeInsets.fromLTRB(14, 10, 14, 28),
       children: [
         Row(children: [
@@ -53,6 +61,32 @@ class DashboardScreen extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(child: _BudgetChip(icon: Icons.payments_outlined, label: 'WAGE BUDGET', value: fmtMoney(club.wageBudget))),
         ]),
+        const SizedBox(height: 14),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(17),
+            boxShadow: [BoxShadow(color: AppTheme.green.withOpacity(.18), blurRadius: 22, offset: const Offset(0, 5))],
+          ),
+          child: SizedBox(
+            width: double.infinity,
+            height: 54,
+            child: FilledButton.icon(
+              onPressed: c.seasonComplete ? null : () {
+                final result = game.playMatchday();
+                if (result != null) {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => MatchScreen(result: result)));
+                }
+              },
+              icon: const Icon(Icons.fast_forward_rounded, size: 22),
+              label: const Text('FORWARD TIME', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w900, letterSpacing: 1.1)),
+              style: FilledButton.styleFrom(
+                backgroundColor: AppTheme.green,
+                foregroundColor: const Color(0xFF04131B),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              ),
+            ),
+          ),
+        ),
         const SizedBox(height: 20),
         const _SectionHeading(title: 'MANAGER HUB', trailing: 'QUICK ACCESS'),
         const SizedBox(height: 9),
@@ -109,7 +143,7 @@ class DashboardScreen extends StatelessWidget {
         const Center(child: Text('FOOTBALL DYNASTY  •  BUILD YOUR LEGACY',
           style: TextStyle(color: Colors.white30, fontSize: 9, letterSpacing: 1.2))),
       ],
-    );
+    ));
   }
 
   void _open(BuildContext context, Widget page) {
