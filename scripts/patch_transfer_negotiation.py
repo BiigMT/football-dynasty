@@ -53,6 +53,11 @@ patch('lib/state/game_controller.dart', '''  ActionResult acceptOffer(String id)
 ''', '''  ActionResult acceptOffer(String id) => run((c) => c.acceptOffer(id));
   ActionResult counterTransferOffer(String id, int fee) => run((c) => c.counterTransferOffer(id, fee));
 ''')
+patch('lib/screens/transfers_screen.dart', """.where((p) => query.isEmpty || p.name.toLowerCase().contains(query.toLowerCase()))""", """.where((p) => query.isEmpty ||
+            p.name.toLowerCase().contains(query.toLowerCase()) ||
+            (p.clubId != null && (c.clubs[p.clubId!]?.name.toLowerCase().contains(query.toLowerCase()) ?? false)))""")
+patch('lib/screens/transfers_screen.dart', "hintText: 'Search by name'", "hintText: 'Search players or clubs'")
+
 patch('lib/screens/transfers_screen.dart', '''  Widget _offers(BuildContext context, GameController game) {
 ''', '''  Future<void> _counterDialog(BuildContext context, GameController game, TransferOffer offer, Player player) async {
     final controller = TextEditingController(text: (player.value * 1.15).round().toString());
