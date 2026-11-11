@@ -1,4 +1,3 @@
-
 name: Build Football Dynasty APK
 
 on:
@@ -31,16 +30,24 @@ jobs:
           PROJECT=$(find /tmp/claude_game -name pubspec.yaml -print -quit)
           test -n "$PROJECT"
           echo "PROJECT_DIR=$(dirname "$PROJECT")" >> "$GITHUB_ENV"
+
+      - name: Apply Football Dynasty v2 updates
+        run: |
+          test -d "$GITHUB_WORKSPACE/v2_overlay"
+          cp -R "$GITHUB_WORKSPACE/v2_overlay/." "$PROJECT_DIR/"
+          echo "Applied v2 source updates to $PROJECT_DIR"
+
       - name: Upload extracted source for development
         uses: actions/upload-artifact@v4
         with:
           name: football-dynasty-source-v2
-          path: /tmp/claude_game/football_dynasty_phase1
+          path: ${{ env.PROJECT_DIR }}
           retention-days: 7
 
       - name: Generate Android project files
         working-directory: ${{ env.PROJECT_DIR }}
         run: flutter create --platforms=android .
+
       - name: Get dependencies
         working-directory: ${{ env.PROJECT_DIR }}
         run: flutter pub get
@@ -56,5 +63,6 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: football-dynasty-apk
+          name: football-dynasty-apk-v2
           path: ${{ env.PROJECT_DIR }}/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30
