@@ -332,7 +332,7 @@ class _NewCareerScreenState extends State<NewCareerScreen> {
           ));
         })),
         Container(padding: const EdgeInsets.fromLTRB(18, 10, 18, 18), decoration: BoxDecoration(color: AppTheme.panel, border: Border(top: BorderSide(color: Colors.white.withOpacity(.08)))), child: Column(children: [
-          const Text('All supported leagues are loaded into the global transfer market. Real club identities are included, but player squads and ratings are generated placeholders until verified real-world squad packs are added. Zambia\\'s two transition streams are playable separately; the championship final is not yet simulated.', style: TextStyle(color: Colors.white54, fontSize: 10), textAlign: TextAlign.center),
+          const Text('All supported leagues are loaded into the global transfer market. Real club identities are included, but player squads and ratings are generated placeholders until verified real-world squad packs are added. the two Zambian transition streams are playable separately; the championship final is not yet simulated.', style: TextStyle(color: Colors.white54, fontSize: 10), textAlign: TextAlign.center),
           const SizedBox(height: 9),
           SizedBox(width: double.infinity, child: FilledButton(onPressed: selectedClub == null || starting ? null : () async {
             setState(() => starting = true);
