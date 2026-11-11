@@ -152,7 +152,7 @@ patch('lib/state/game_controller.dart', """  Future<void> startCareer(int s, Str
     career = Career.newGame(managerName: manager, userClubId: clubId, seed: seed);""", """  Future<void> startCareer(int s, String manager, String clubId, int seed, {String competitionId = 'fictional-demo'}) async {
     career = Career.newGame(managerName: manager, userClubId: clubId, seed: seed, competitionId: competitionId);""")
 
-patch('lib/screens/competitions_screen.dart', """          child: ScreenHeader(kicker: 'FICTIONAL LEAGUE', title: 'Premier Division \${c.seasonLabel}'),""", """          child: ScreenHeader(kicker: 'LEAGUE COMPETITION', title: '\${c.competitionName} \${c.seasonLabel}'),""")
+patch('lib/screens/competitions_screen.dart', """          child: ScreenHeader(kicker: 'FICTIONAL LEAGUE', title: 'Premier Division ${c.seasonLabel}'),""", """          child: ScreenHeader(kicker: 'LEAGUE COMPETITION', title: '\${c.competitionName} \${c.seasonLabel}'),""")
 
 patch('lib/screens/dashboard_screen.dart', """            const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('FOOTBALL DYNASTY', style: TextStyle(fontSize: 11, letterSpacing: 2.0, color: AppTheme.green, fontWeight: FontWeight.w900)),
