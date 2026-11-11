@@ -31,6 +31,13 @@ jobs:
           PROJECT=$(find /tmp/claude_game -name pubspec.yaml -print -quit)
           test -n "$PROJECT"
           echo "PROJECT_DIR=$(dirname "$PROJECT")" >> "$GITHUB_ENV"
+      - name: Upload extracted source for development
+        uses: actions/upload-artifact@v4
+        with:
+          name: football-dynasty-source-v2
+          path: /tmp/claude_game/football_dynasty_phase1
+          retention-days: 7
+
       - name: Generate Android project files
         working-directory: ${{ env.PROJECT_DIR }}
         run: flutter create --platforms=android .
