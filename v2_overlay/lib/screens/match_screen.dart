@@ -98,7 +98,7 @@ class _MatchScreenState extends State<MatchScreen> {
             ]),
           ]),
         ),
-        Padding(padding: const EdgeInsets.all(12), child: AspectRatio(aspectRatio: 1.12,
+        Padding(padding: const EdgeInsets.all(12), child: AspectRatio(aspectRatio: 0.88,
           child: ClipRRect(borderRadius: BorderRadius.circular(14), child: CustomPaint(
             painter: _PitchPainter(),
             child: Stack(children: [
