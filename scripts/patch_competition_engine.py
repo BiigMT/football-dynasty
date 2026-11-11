@@ -168,7 +168,7 @@ patch('lib/domain/world_generator.dart', "  /// Creates clubs and players. Retur
   /// Creates clubs and players. Returns the next free player number.""")
 
 patch('lib/domain/career.dart', "import 'world_generator.dart';", "import 'world_generator.dart';\nimport '../data/real_world_competitions.dart';")
-patch('lib/domain/career.dart', 'static const schemaVersion = 2;', 'static const schemaVersion = 3;')
+patch('lib/domain/career.dart', 'static const schemaVersion = 2;', 'static const schemaVersion = 4;')
 patch('lib/domain/career.dart', "  String managerName;\n  String userClubId;", "  String managerName;\n  String userClubId;\n  String competitionId;\n  String competitionName;")
 patch('lib/domain/career.dart', "    required this.managerName,\n    required this.userClubId,", "    required this.managerName,\n    required this.userClubId,\n    required this.competitionId,\n    required this.competitionName,")
 patch('lib/domain/career.dart', """    required int seed,
@@ -184,18 +184,21 @@ patch('lib/domain/career.dart', """    required int seed,
     if (competitionId != 'fictional-demo' && competition == null) {
       throw ArgumentError('Unknown or unsupported competition: $competitionId');
     }
+    final leagueClubIds = competition?.clubs.map((club) => club.id).toList() ?? <String>[];
     final next = competition == null
         ? WorldGenerator.generate(seed: seed, clubs: clubs, players: players)
-        : WorldGenerator.generateForCompetition(seed: seed, competition: competition, clubs: clubs, players: players);""")
+        : includeAllCompetitions
+            ? WorldGenerator.generateForWorld(seed: seed, clubs: clubs, players: players)
+            : WorldGenerator.generateForCompetition(seed: seed, competition: competition, clubs: clubs, players: players);""")
 patch('lib/domain/career.dart', "      managerName: managerName,\n      userClubId: userClubId,", "      managerName: managerName,\n      userClubId: userClubId,\n      competitionId: competition?.id ?? 'fictional-demo',\n      competitionName: competition?.name ?? 'Dynasty Demo League',")
 patch('lib/domain/career.dart', "  int get totalMatchdays => (clubs.length - 1) * 2;", "  int get totalMatchdays => fixtures.where((f) => f.season == season).fold<int>(0, (maxRound, f) => f.matchday > maxRound ? f.matchday : maxRound);\n  bool get usesGeneratedPlayers => competitionId != 'fictional-demo';")
 patch('lib/domain/career.dart', "    if (matchday <= 4) return 'Summer';\n    if (matchday >= 16 && matchday <= 18) return 'Winter';", "    if (matchday <= 4) return 'Summer';\n    final winterStart = (totalMatchdays / 2).floor() + 1;\n    if (matchday >= winterStart && matchday <= winterStart + 2) return 'Winter';")
-patch('lib/domain/career.dart', "        'manager': managerName,\n        'userClub': userClubId,", "        'manager': managerName,\n        'userClub': userClubId,\n        'competitionId': competitionId,\n        'competitionName': competitionName,")
-patch('lib/domain/career.dart', "      managerName: j['manager'] as String,\n      userClubId: j['userClub'] as String,", "      managerName: j['manager'] as String,\n      userClubId: j['userClub'] as String,\n      competitionId: j['competitionId'] as String? ?? 'fictional-demo',\n      competitionName: j['competitionName'] as String? ?? 'Dynasty Demo League',")
+patch('lib/domain/career.dart', "        'manager': managerName,\n        'userClub': userClubId,", "        'manager': managerName,\n        'userClub': userClubId,\n        'competitionId': competitionId,\n        'competitionName': competitionName,\n        'competitionClubIds': competitionClubIds,")
+patch('lib/domain/career.dart', "      managerName: j['manager'] as String,\n      userClubId: j['userClub'] as String,", "      managerName: j['manager'] as String,\n      userClubId: j['userClub'] as String,\n      competitionId: j['competitionId'] as String? ?? 'fictional-demo',\n      competitionName: j['competitionName'] as String? ?? 'Dynasty Demo League',\n      competitionClubIds: ((j['competitionClubIds'] as List?) ?? (j['clubs'] as List).map((c) => (c as Map<String, dynamic>)['id']).toList()).cast<String>(),")
 
 patch('lib/state/game_controller.dart', """  Future<void> startCareer(int s, String manager, String clubId, int seed) async {
     career = Career.newGame(managerName: manager, userClubId: clubId, seed: seed);""", """  Future<void> startCareer(int s, String manager, String clubId, int seed, {String competitionId = 'fictional-demo'}) async {
-    career = Career.newGame(managerName: manager, userClubId: clubId, seed: seed, competitionId: competitionId);""")
+    career = Career.newGame(managerName: manager, userClubId: clubId, seed: seed, competitionId: competitionId, includeAllCompetitions: true);""")
 
 patch('lib/screens/competitions_screen.dart', """          child: ScreenHeader(kicker: 'FICTIONAL LEAGUE', title: 'Premier Division ${c.seasonLabel}'),""", """          child: ScreenHeader(kicker: 'LEAGUE COMPETITION', title: '${c.competitionName} ${c.seasonLabel}'),""")
 
@@ -214,9 +217,9 @@ patch('lib/screens/dashboard_screen.dart', """            const Expanded(child: 
 patch('test/career_test.dart', "import 'package:football_dynasty/domain/models.dart';", "import 'package:football_dynasty/domain/models.dart';\nimport 'package:football_dynasty/data/real_world_competitions.dart';")
 patch('test/career_test.dart', "  test('world generation is deterministic', () {", """  test('real-world competition sizes generate complete independent leagues', () {
     for (final competition in RealWorldCompetitions.all) {
-      final c = Career.newGame(managerName: 'Tester', userClubId: competition.clubs.first.id, seed: 20261111, competitionId: competition.id);
+      final c = Career.newGame(managerName: 'Tester', userClubId: competition.clubs.first.id, seed: 20261111, competitionId: competition.id, includeAllCompetitions: true);
       expect(c.competitionName, competition.name);
-      expect(c.clubs.length, competition.teamCount);
+      expect(c.clubs.length, RealWorldCompetitions.all.fold<int>(0, (sum, item) => sum + item.teamCount));\n      expect(c.competitionClubIds.length, competition.teamCount);
       expect(c.totalMatchdays, competition.matchesPerTeam);
       expect(c.fixtures.length, competition.teamCount * competition.matchesPerTeam ~/ 2);
       expect(c.table.length, competition.teamCount);
