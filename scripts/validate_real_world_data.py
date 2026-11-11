@@ -49,6 +49,10 @@ expected_leagues = {
     "ger-bundesliga": 18,
     "ita-serie-a": 20,
     "fra-ligue-1": 18,
+    "rsa-betway-premiership": 16,
+    "gha-premier-league": 18,
+    "nga-npfl": 20,
+    "mar-botola-pro": 16,
 }
 for league_id, expected_count in expected_leagues.items():
     league = next((c for c in competitions if c["id"] == league_id), None)
@@ -56,6 +60,30 @@ for league_id, expected_count in expected_leagues.items():
     assert len(league.get("clubs", [])) == expected_count, (
         f"{league_id}: expected {expected_count} clubs, found {len(league.get('clubs', []))}"
     )
+
+
+expected_matches = {
+    "esp-la-liga": 38,
+    "ger-bundesliga": 34,
+    "ita-serie-a": 38,
+    "fra-ligue-1": 34,
+    "rsa-betway-premiership": 30,
+    "gha-premier-league": 34,
+    "nga-npfl": 38,
+    "mar-botola-pro": 30,
+}
+for league_id, matches in expected_matches.items():
+    league = next(c for c in competitions if c["id"] == league_id)
+    assert league.get("format") == "double_round_robin", (
+        f"{league_id}: unexpected competition format"
+    )
+    assert league.get("matchesPerTeam") == matches, (
+        f"{league_id}: expected {matches} matches per team"
+    )
+
+assert data.get("playerSquads", {}).get("status") == "not_yet_added", (
+    "Real-player squads must not be marked complete until official verification"
+)
 
 print(f"Real-world dataset valid: {len(competitions)} competitions, {len(club_ids)} clubs.")
 
