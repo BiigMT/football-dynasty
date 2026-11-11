@@ -67,8 +67,8 @@ class _MatchScreenState extends State<MatchScreen> {
           child: ClipRRect(borderRadius: BorderRadius.circular(14), child: CustomPaint(
             painter: _PitchPainter(),
             child: Stack(children: [
-              for (var i = 0; i < r.homeXI.length && i < 11; i++) _PlayerDot(index: i, home: true),
-              for (var i = 0; i < r.awayXI.length && i < 11; i++) _PlayerDot(index: i, home: false),
+              for (var i = 0; i < r.homeXI.length && i < 11; i++) _PlayerDot(index: i, home: true, minute: minute),
+              for (var i = 0; i < r.awayXI.length && i < 11; i++) _PlayerDot(index: i, home: false, minute: minute),
               AnimatedAlign(
                 duration: const Duration(milliseconds: 650),
                 curve: Curves.easeInOutCubic,
@@ -121,8 +121,8 @@ class _Team extends StatelessWidget {
   ]));
 }
 class _PlayerDot extends StatelessWidget {
-  final int index; final bool home;
-  const _PlayerDot({required this.index, required this.home});
+  final int index; final bool home; final int minute;
+  const _PlayerDot({required this.index, required this.home, required this.minute});
   @override
   Widget build(BuildContext context) {
     final row = index == 0 ? 0 : index <= 4 ? 1 : index <= 7 ? 2 : 3;
@@ -130,18 +130,22 @@ class _PlayerDot extends StatelessWidget {
     final count = row == 0 ? 1 : row == 1 ? 4 : 3;
     final x = count == 1 ? .5 : .12 + .76 * (index - start) / (count - 1);
     final y = row / 3;
-    final left = home ? x : 1 - x;
-    final top = home ? .13 + y * .70 : .13 + (1 - y) * .70;
+    final phase = (minute ~/ 3 + index * 7) % 9;
+    final driftX = minute == 0 ? 0.0 : (phase - 4) * .008;
+    final driftY = minute == 0 ? 0.0 : ((index + minute ~/ 5) % 5 - 2) * .009;
+    final left = (home ? x + driftX : 1 - x - driftX).clamp(.06, .94);
+    final top = (home ? .13 + y * .70 + driftY : .13 + (1 - y) * .70 - driftY).clamp(.08, .92);
     return LayoutBuilder(builder: (context, constraints) {
       const size = 23.0;
       final dx = (constraints.maxWidth * left - size / 2).clamp(0.0, constraints.maxWidth - size);
       final dy = (constraints.maxHeight * top - size / 2).clamp(0.0, constraints.maxHeight - size);
       return Stack(children: [
-        Positioned(left: dx, top: dy, child: Container(
+        AnimatedPositioned(duration: const Duration(milliseconds: 700), curve: Curves.easeInOut, left: dx, top: dy, child: Container(
           width: size, height: size,
           decoration: BoxDecoration(
-            color: home ? AppTheme.green : AppTheme.gold,
+            color: home ? const Color(0xFFB7F36B) : const Color(0xFFFFC857),
             shape: BoxShape.circle,
+            gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: home ? [const Color(0xFFE3FFB4), AppTheme.green, const Color(0xFF639C2B)] : [const Color(0xFFFFE6A3), AppTheme.gold, const Color(0xFFB87916)],),
             border: Border.all(color: Colors.white, width: 1.5),
             boxShadow: [BoxShadow(color: Colors.black.withOpacity(.35), blurRadius: 5, offset: const Offset(0, 2))],
           ),
