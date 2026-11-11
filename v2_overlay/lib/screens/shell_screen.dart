@@ -3,6 +3,7 @@ import '../state/game_controller.dart';
 import '../theme/app_theme.dart';
 import 'competitions_screen.dart';
 import 'dashboard_screen.dart';
+import 'national_team_screen.dart';
 import 'squad_screen.dart';
 import 'tactics_screen.dart';
 import 'transfers_screen.dart';
@@ -23,15 +24,17 @@ class _ShellScreenState extends State<ShellScreen> {
     TransfersScreen(),
     CompetitionsScreen(),
     TacticsScreen(),
+    NationalTeamScreen(),
   ];
 
-  static const labels = ['HOME', 'SQUAD', 'MARKET', 'LEAGUE', 'TACTICS'];
+  static const labels = ['HOME', 'SQUAD', 'MARKET', 'LEAGUE', 'TACTICS', 'NATION'];
   static const icons = [
     Icons.home_rounded,
     Icons.groups_rounded,
     Icons.swap_horiz_rounded,
     Icons.emoji_events_rounded,
     Icons.tune_rounded,
+    Icons.flag_rounded,
   ];
 
   @override
@@ -62,7 +65,7 @@ class _ShellScreenState extends State<ShellScreen> {
                     onTap: () => setState(() => selectedIndex = index),
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 180),
-                      margin: const EdgeInsets.fromLTRB(4, 7, 4, 5),
+                      margin: const EdgeInsets.fromLTRB(3, 7, 3, 5),
                       decoration: BoxDecoration(
                         color: selected ? AppTheme.green.withOpacity(.12) : Colors.transparent,
                         borderRadius: BorderRadius.circular(13),
@@ -75,7 +78,7 @@ class _ShellScreenState extends State<ShellScreen> {
                         children: [
                           Icon(
                             icons[index],
-                            size: 21,
+                            size: 20,
                             color: selected ? AppTheme.green : AppTheme.muted,
                           ),
                           const SizedBox(height: 4),
@@ -83,8 +86,8 @@ class _ShellScreenState extends State<ShellScreen> {
                             labels[index],
                             maxLines: 1,
                             style: TextStyle(
-                              fontSize: 8,
-                              letterSpacing: .7,
+                              fontSize: 7,
+                              letterSpacing: .4,
                               fontWeight: selected ? FontWeight.w900 : FontWeight.w600,
                               color: selected ? AppTheme.green : AppTheme.muted,
                             ),
