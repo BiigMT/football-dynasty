@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../state/game_controller.dart';
+import '../theme/app_theme.dart';
 import 'competitions_screen.dart';
 import 'dashboard_screen.dart';
 import 'squad_screen.dart';
@@ -24,12 +25,13 @@ class _ShellScreenState extends State<ShellScreen> {
     TacticsScreen(),
   ];
 
-  static const destinations = [
-    NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home_rounded), label: 'Home'),
-    NavigationDestination(icon: Icon(Icons.groups_2_outlined), selectedIcon: Icon(Icons.groups_2_rounded), label: 'Squad'),
-    NavigationDestination(icon: Icon(Icons.swap_horiz_rounded), selectedIcon: Icon(Icons.swap_horiz_rounded), label: 'Market'),
-    NavigationDestination(icon: Icon(Icons.emoji_events_outlined), selectedIcon: Icon(Icons.emoji_events_rounded), label: 'League'),
-    NavigationDestination(icon: Icon(Icons.tune_rounded), selectedIcon: Icon(Icons.tune_rounded), label: 'Tactics'),
+  static const labels = ['HOME', 'SQUAD', 'MARKET', 'LEAGUE', 'TACTICS'];
+  static const icons = [
+    Icons.home_rounded,
+    Icons.groups_rounded,
+    Icons.swap_horiz_rounded,
+    Icons.emoji_events_rounded,
+    Icons.tune_rounded,
   ];
 
   @override
@@ -40,10 +42,62 @@ class _ShellScreenState extends State<ShellScreen> {
         bottom: false,
         child: IndexedStack(index: selectedIndex, children: pages),
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: selectedIndex,
-        destinations: destinations,
-        onDestinationSelected: (value) => setState(() => selectedIndex = value),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFF091522),
+          border: Border(top: BorderSide(color: Colors.white.withOpacity(.08))),
+          boxShadow: const [
+            BoxShadow(color: Colors.black38, blurRadius: 18, offset: Offset(0, -5)),
+          ],
+        ),
+        child: SafeArea(
+          top: false,
+          child: SizedBox(
+            height: 66,
+            child: Row(
+              children: List.generate(labels.length, (index) {
+                final selected = selectedIndex == index;
+                return Expanded(
+                  child: InkWell(
+                    onTap: () => setState(() => selectedIndex = index),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 180),
+                      margin: const EdgeInsets.fromLTRB(4, 7, 4, 5),
+                      decoration: BoxDecoration(
+                        color: selected ? AppTheme.green.withOpacity(.12) : Colors.transparent,
+                        borderRadius: BorderRadius.circular(13),
+                        border: selected
+                            ? Border.all(color: AppTheme.green.withOpacity(.22))
+                            : null,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            icons[index],
+                            size: 21,
+                            color: selected ? AppTheme.green : AppTheme.muted,
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            labels[index],
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontSize: 8,
+                              letterSpacing: .7,
+                              fontWeight: selected ? FontWeight.w900 : FontWeight.w600,
+                              color: selected ? AppTheme.green : AppTheme.muted,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
+        ),
       ),
     );
   }
