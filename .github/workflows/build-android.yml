@@ -44,6 +44,7 @@ jobs:
           python3 "$GITHUB_WORKSPACE/scripts/patch_transfer_listing.py" "$PROJECT_DIR"
           python3 "$GITHUB_WORKSPACE/scripts/patch_international_management.py" "$PROJECT_DIR"
           python3 "$GITHUB_WORKSPACE/scripts/patch_transfer_negotiation.py" "$PROJECT_DIR"
+          python3 "$GITHUB_WORKSPACE/scripts/patch_contract_negotiation.py" "$PROJECT_DIR"
           python3 "$GITHUB_WORKSPACE/scripts/patch_competition_engine.py" "$PROJECT_DIR" "$GITHUB_WORKSPACE"
           echo "Applied Football Dynasty v2 updates to $PROJECT_DIR"
 
