@@ -207,14 +207,14 @@ patch('lib/state/game_controller.dart', """  Future<void> startCareer(int s, Str
 
 patch('lib/screens/competitions_screen.dart', """          child: ScreenHeader(kicker: 'FICTIONAL LEAGUE', title: 'Premier Division ${c.seasonLabel}'),""", """          child: ScreenHeader(kicker: 'LEAGUE COMPETITION', title: '${c.competitionName} ${c.seasonLabel}'),""")
 
-patch('lib/screens/dashboard_screen.dart', """            const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('FOOTBALL DYNASTY', style: TextStyle(fontSize: 11, letterSpacing: 2.0, color: AppTheme.green, fontWeight: FontWeight.w900)),
-              Text('Manager career', style: TextStyle(fontSize: 19, fontWeight: FontWeight.w900)),
-            ])),""", """            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text('FOOTBALL DYNASTY', style: TextStyle(fontSize: 11, letterSpacing: 2.0, color: AppTheme.green, fontWeight: FontWeight.w900)),
-              Text(c.competitionName, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900)),
-              if (c.usesGeneratedPlayers) const Text('GENERATED PLAYER DATABASE', style: TextStyle(color: AppTheme.gold, fontSize: 8, letterSpacing: 1, fontWeight: FontWeight.w800)),
-            ])),
+patch('lib/screens/dashboard_screen.dart', """          const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text('FOOTBALL DYNASTY', style: TextStyle(fontSize: 11, letterSpacing: 2, color: AppTheme.green, fontWeight: FontWeight.w900)),
+            Text('MANAGER CAREER', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, letterSpacing: .4)),
+          ])),""", """          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            const Text('FOOTBALL DYNASTY', style: TextStyle(fontSize: 11, letterSpacing: 2, color: AppTheme.green, fontWeight: FontWeight.w900)),
+            Text(c.competitionName, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900)),
+            if (c.usesGeneratedPlayers) const Text('GENERATED PLAYER DATABASE', style: TextStyle(color: AppTheme.gold, fontSize: 8, letterSpacing: 1, fontWeight: FontWeight.w800)),
+          ])),
 """)
 
 
