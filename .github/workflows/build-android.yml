@@ -49,18 +49,8 @@ jobs:
         working-directory: ${{ env.PROJECT_DIR }}
         run: flutter create --platforms=android .
 
-      - name: Force portrait orientation in Android manifest
-        working-directory: ${{ env.PROJECT_DIR }}
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p = Path("android/app/src/main/AndroidManifest.xml")
-          s = p.read_text()
-          if 'android:screenOrientation="portrait"' not in s:
-              s = s.replace("<activity", '<activity android:screenOrientation="portrait"', 1)
-          p.write_text(s)
-          print("Android activity locked to portrait.")
-          PY
+      - name: Force and verify portrait orientation
+        run: python3 "$GITHUB_WORKSPACE/scripts/force_portrait.py" "$PROJECT_DIR"
 
       - name: Get dependencies
         working-directory: ${{ env.PROJECT_DIR }}
