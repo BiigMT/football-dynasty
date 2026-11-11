@@ -122,6 +122,51 @@ patch('lib/domain/world_generator.dart', "  static int get clubCount => _clubSee
     return generateFreeAgents(rng: rng, players: players, startNumber: number, count: 40);
   }""")
 
+patch('lib/domain/world_generator.dart', "  /// Creates clubs and players. Returns the next free player number.", """  /// Builds the full football world. All supported leagues are available
+  /// to the transfer market; only the selected league gets season fixtures.
+  static int generateForWorld({
+    required int seed,
+    required Map<String, Club> clubs,
+    required Map<String, Player> players,
+  }) {
+    final rng = SeededRandom(mixSeed(seed, 77));
+    var number = 1;
+    for (final competition in RealWorldCompetitions.all) {
+      for (final source in competition.clubs) {
+        if (clubs.containsKey(source.id)) continue;
+        final reputation = rng.range(48, 84);
+        final club = Club(
+          id: source.id,
+          name: source.name,
+          shortName: _shortName(source.name),
+          reputation: reputation,
+          balance: reputation * 66000,
+          transferBudget: reputation * 176000,
+          wageBudget: 0,
+          stadiumCapacity: 10000 + reputation * 420,
+          colorValue: _realClubColours[clubs.length % _realClubColours.length],
+          tactics: Tactics(formation: formations.keys.elementAt(rng.nextInt(formations.length))),
+        );
+        clubs[club.id] = club;
+        var bill = 0;
+        squadTemplate.forEach((pos, count) {
+          for (var k = 0; k < count; k++) {
+            final player = generatePlayer(
+              rng: rng, number: number++, position: pos,
+              level: reputation - 4 - (k * 3), clubId: club.id,
+            );
+            players[player.id] = player;
+            bill += player.wage;
+          }
+        });
+        club.wageBudget = (bill * 1.12 / 1000).round() * 1000;
+      }
+    }
+    return generateFreeAgents(rng: rng, players: players, startNumber: number, count: 80);
+  }
+
+  /// Creates clubs and players. Returns the next free player number.""")
+
 patch('lib/domain/career.dart', "import 'world_generator.dart';", "import 'world_generator.dart';\nimport '../data/real_world_competitions.dart';")
 patch('lib/domain/career.dart', 'static const schemaVersion = 2;', 'static const schemaVersion = 3;')
 patch('lib/domain/career.dart', "  String managerName;\n  String userClubId;", "  String managerName;\n  String userClubId;\n  String competitionId;\n  String competitionName;")
