@@ -45,6 +45,9 @@ class _MatchScreenState extends State<MatchScreen> {
       }
     }
     final minute = visible.isEmpty ? 0 : visible.last.minute;
+    final homeAttacking = visible.isEmpty || visible.last.clubId == r.homeId;
+    final ballLane = visible.isEmpty ? 0.0 : (homeAttacking ? .34 : -.34);
+    final ballDepth = ((minute * 13) % 70) / 100 - .35;
     return Scaffold(
       appBar: AppBar(title: const Text('MATCH CENTRE'), actions: [
         if (!finished) IconButton(onPressed: () { setState(() => fast = !fast); _tick(); }, icon: Icon(fast ? Icons.speed : Icons.fast_forward)),
@@ -105,8 +108,8 @@ class _MatchScreenState extends State<MatchScreen> {
                 duration: const Duration(milliseconds: 650),
                 curve: Curves.easeInOutCubic,
                 alignment: Alignment(
-                  ((minute * 37) % 80) / 40 - 1,
-                  ((minute * 19) % 60) / 30 - 1,
+                  ballLane + ((minute * 7) % 15) / 100 - .07,
+                  ballDepth,
                 ),
                 child: Container(
                   width: 13, height: 13,
@@ -119,7 +122,14 @@ class _MatchScreenState extends State<MatchScreen> {
                 ),
               ),
               if (visible.isNotEmpty && visible.last.type == EventType.goal)
-                const Align(alignment: Alignment.bottomCenter, child: Padding(padding: EdgeInsets.all(8), child: Text('⚽ GOAL!', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900)))),
+                const Align(alignment: Alignment.bottomCenter, child: Padding(padding: EdgeInsets.all(8), child: Text('⚽  GOAL!', style: TextStyle(color: Colors.white, fontSize: 16, letterSpacing: 2, fontWeight: FontWeight.w900, shadows: [Shadow(color: Colors.black, blurRadius: 8)])))),
+              if (visible.isNotEmpty && (visible.last.type == EventType.halftime || visible.last.type == EventType.fulltime))
+                Center(child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
+                  decoration: BoxDecoration(color: const Color(0xE6091522), borderRadius: BorderRadius.circular(14), border: Border.all(color: AppTheme.green.withOpacity(.6))),
+                  child: Text(visible.last.type == EventType.halftime ? 'HALF TIME' : 'FULL TIME',
+                    style: const TextStyle(color: AppTheme.green, fontSize: 17, letterSpacing: 2, fontWeight: FontWeight.w900)),
+                )),
             ]),
           )),
         )),
