@@ -227,7 +227,7 @@ class _BecomeLegendScreenState extends State<BecomeLegendScreen> {
   Widget heading(String title)=>Text(title,style:const TextStyle(fontSize:12,fontWeight:FontWeight.w900,letterSpacing:.6));
   Color colorFor(int v)=>v>=85?Colors.redAccent:v>=80?Colors.orange:v>=75?Colors.amber:v>=70?Colors.lightGreen:cyan;
 }
-""".replaceAll('§{','${'))
+""".replace('§{','${'))
 
 replace('lib/screens/dashboard_screen.dart',
   "import 'national_team_screen.dart';",
