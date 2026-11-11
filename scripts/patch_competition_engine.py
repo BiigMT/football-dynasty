@@ -65,6 +65,11 @@ def patch(rel, old, new):
     path.write_text(src.replace(old, new, 1), encoding='utf-8')
 
 patch('lib/domain/world_generator.dart', "import 'rng.dart';", "import 'rng.dart';\nimport '../data/real_world_competitions.dart';")
+patch('lib/domain/world_generator.dart', """/// Generates a fully fictional football world. Names, clubs and ratings are
+/// invented; nothing here is derived from real-world data.""", """/// Generates demo squads or a real-club football world. Club identities come
+/// from the local competition pack; player identities remain generated until
+/// approved, redistributable squad data is available.""")
+
 patch('lib/domain/world_generator.dart', "  static int get clubCount => _clubSeeds.length;", """  static int get clubCount => _clubSeeds.length;
 
   static const _realClubColours = <int>[
