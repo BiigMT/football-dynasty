@@ -234,6 +234,7 @@ patch('test/career_test.dart', "  test('world generation is deterministic', () {
       final c = Career.newGame(managerName: 'Tester', userClubId: competition.clubs.first.id, seed: 20261111, competitionId: competition.id, includeAllCompetitions: true);
       expect(c.competitionName, competition.name);
       expect(c.clubs.length, RealWorldCompetitions.all.fold<int>(0, (sum, item) => sum + item.teamCount));\n      expect(c.competitionClubIds.length, competition.teamCount);
+      expect(c.players.length, c.clubs.length * 24 + 80);
       expect(c.totalMatchdays, competition.matchesPerTeam);
       expect(c.fixtures.length, competition.teamCount * competition.matchesPerTeam ~/ 2);
       expect(c.table.length, competition.teamCount);
