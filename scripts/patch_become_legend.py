@@ -18,6 +18,14 @@ def replace(path, old, new):
     if old not in source: raise SystemExit(f'Patch anchor missing in {path}')
     target.write_text(source.replace(old, new, 1), encoding='utf-8')
 
+pubspec = root / 'pubspec.yaml'
+pubspec_text = pubspec.read_text(encoding='utf-8')
+if 'shared_preferences:' not in pubspec_text:
+    if '\ndependencies:\n' not in pubspec_text:
+        raise SystemExit('Could not find dependencies section in pubspec.yaml')
+    pubspec_text = pubspec_text.replace('\ndependencies:\n', '\ndependencies:\n  shared_preferences: ^2.5.3\n', 1)
+    pubspec.write_text(pubspec_text, encoding='utf-8')
+
 write('lib/domain/player_career.dart', r"""class PlayerCareer {
   String name, nationality, position, club;
   int age, overall, appearances, goals, assists, trainingPoints;
