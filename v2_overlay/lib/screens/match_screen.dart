@@ -18,10 +18,18 @@ class _MatchScreenState extends State<MatchScreen> {
   int shown = 0;
   bool fast = false;
   bool halftimePaused = false;
+  bool halfTimeManagerShown = false;
+  List<String> activeHomeXI = [];
+  List<String> activeAwayXI = [];
+  String? selectedOutgoingId;
+  String? selectedIncomingId;
+  int substitutionsUsed = 0;
+  bool teamTalkGiven = false;
+  final List<String> halftimeNotes = [];
   List<MatchEvent> get events => widget.result.events;
   bool get finished => shown >= events.length;
   @override
-  void initState() { super.initState(); _tick(); }
+  void initState() { super.initState(); activeHomeXI = List<String>.from(widget.result.homeXI); activeAwayXI = List<String>.from(widget.result.awayXI); _tick(); }
   void _tick() {
     timer?.cancel();
     timer = Timer.periodic(Duration(milliseconds: fast ? 180 : 800), (_) {
@@ -30,10 +38,137 @@ class _MatchScreenState extends State<MatchScreen> {
       setState(() => shown++);
       if (shown > 0 && events[shown - 1].type == EventType.halftime) {
         timer?.cancel();
-        if (mounted) setState(() => halftimePaused = true);
+        if (mounted) { setState(() => halftimePaused = true); if (!halfTimeManagerShown) { halfTimeManagerShown = true; WidgetsBinding.instance.addPostFrameCallback((_) { if (mounted) _openHalftimeManager(); }); } }
       }
     });
   }
+
+  void _giveTeamTalk(String talk) {
+    final controller = GameScope.of(context);
+    final career = controller.career!;
+    final ids = widget.result.homeId == career.userClubId ? activeHomeXI : activeAwayXI;
+    final boost = talk == 'Demand more' ? 2 : talk == 'Calm down' ? 3 : 4;
+    controller.run((c) {
+      for (final id in ids) {
+        final player = c.players[id];
+        if (player != null) player.morale = (player.morale + boost).clamp(0, 100).toInt();
+      }
+    });
+    setState(() { teamTalkGiven = true; halftimeNotes.add('Team talk: ' + talk + ' — squad morale increased'); });
+  }
+
+  void _makeHalftimeSubstitution() {
+    if (selectedOutgoingId == null || selectedIncomingId == null || substitutionsUsed >= 5) return;
+    final controller = GameScope.of(context);
+    final career = controller.career!;
+    final ids = widget.result.homeId == career.userClubId ? activeHomeXI : activeAwayXI;
+    final outIndex = ids.indexOf(selectedOutgoingId!);
+    final incoming = career.players[selectedIncomingId!];
+    if (outIndex < 0 || incoming == null || !incoming.isAvailable || ids.contains(incoming.id)) return;
+    final outgoing = career.players[selectedOutgoingId!];
+    setState(() {
+      ids[outIndex] = incoming.id;
+      substitutionsUsed++;
+      halftimeNotes.add('Substitution: ' + (outgoing?.name ?? 'Player') + ' off, ' + incoming.name + ' on');
+      selectedOutgoingId = null;
+      selectedIncomingId = null;
+    });
+    controller.setTactics(career.userClub.tactics.copy()..lineup = List<String>.from(ids));
+  }
+
+  void _openHalftimeManager() {
+    if (!mounted || !halftimePaused) return;
+    final controller = GameScope.of(context);
+    final career = controller.career!;
+    final isHome = widget.result.homeId == career.userClubId;
+    final activeIds = isHome ? activeHomeXI : activeAwayXI;
+    final squad = career.userSquad;
+    final bench = squad.where((p) => p.isAvailable && !activeIds.contains(p.id)).toList()
+      ..sort((a, b) => b.rating.compareTo(a.rating));
+    final activePlayers = activeIds.map((id) => career.players[id]).whereType<Player>().toList();
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: const Color(0xFF101F31),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(22))),
+      builder: (sheetContext) => StatefulBuilder(builder: (sheetContext, refreshSheet) {
+        final tactics = career.userClub.tactics;
+        final currentBench = bench.where((p) => !activeIds.contains(p.id)).toList();
+        return SafeArea(child: Padding(
+          padding: EdgeInsets.fromLTRB(16, 12, 16, MediaQuery.of(sheetContext).viewInsets.bottom + 18),
+          child: SingleChildScrollView(child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+            Center(child: Container(width: 42, height: 4, decoration: BoxDecoration(color: Colors.white24, borderRadius: BorderRadius.circular(4)))),
+            const SizedBox(height: 16),
+            const Text('HALF-TIME TEAM TALK', style: TextStyle(color: AppTheme.green, fontSize: 15, fontWeight: FontWeight.w900, letterSpacing: 1.2)),
+            const SizedBox(height: 12),
+            const Text('TEAM TALK', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 11)),
+            Wrap(spacing: 8, children: [
+              for (final talk in ['Encourage', 'Demand more', 'Calm down'])
+                ChoiceChip(label: Text(talk), selected: teamTalkGiven && halftimeNotes.any((n) => n.contains(talk)),
+                  onSelected: teamTalkGiven ? null : (_) { _giveTeamTalk(talk); refreshSheet(() {}); }),
+            ]),
+            const SizedBox(height: 14),
+            const Text('TACTICAL ADJUSTMENTS', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 11)),
+            const SizedBox(height: 8),
+            Row(children: [
+              Expanded(child: _tacticDropdown<String>(label: 'Formation', value: tactics.formation, values: formations.keys.toList(),
+                onChanged: (v) { if (v != null) controller.setTactics(tactics.copy()..formation = v); refreshSheet(() {}); })),
+              const SizedBox(width: 8),
+              Expanded(child: _tacticDropdown<int>(label: 'Mentality', value: tactics.mentality, values: const [0, 1, 2], labels: mentalityLabels,
+                onChanged: (v) { if (v != null) controller.setTactics(tactics.copy()..mentality = v); refreshSheet(() {}); })),
+            ]),
+            const SizedBox(height: 8),
+            Row(children: [
+              Expanded(child: _tacticDropdown<int>(label: 'Pressing', value: tactics.pressing, values: const [0, 1, 2], labels: pressingLabels,
+                onChanged: (v) { if (v != null) controller.setTactics(tactics.copy()..pressing = v); refreshSheet(() {}); })),
+              const SizedBox(width: 8),
+              Expanded(child: _tacticDropdown<int>(label: 'Tempo', value: tactics.tempo, values: const [0, 1, 2], labels: tempoLabels,
+                onChanged: (v) { if (v != null) controller.setTactics(tactics.copy()..tempo = v); refreshSheet(() {}); })),
+            ]),
+            const SizedBox(height: 14),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              const Text('SUBSTITUTIONS', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 11)),
+              Text(substitutionsUsed.toString() + ' / 5 used', style: const TextStyle(color: AppTheme.green, fontSize: 10, fontWeight: FontWeight.w800)),
+            ]),
+            const SizedBox(height: 8),
+            _tacticDropdown<String>(label: 'Player coming off', value: selectedOutgoingId,
+              values: activePlayers.map((p) => p.id).toList(), labels: activePlayers.map((p) => p.name + ' · ' + p.position).toList(),
+              onChanged: (v) { setState(() => selectedOutgoingId = v); refreshSheet(() {}); }),
+            const SizedBox(height: 8),
+            _tacticDropdown<String>(label: 'Player coming on', value: selectedIncomingId,
+              values: currentBench.map((p) => p.id).toList(), labels: currentBench.map((p) => p.name + ' · ' + p.position + ' · ' + p.rating.toString() + ' OVR').toList(),
+              onChanged: (v) { setState(() => selectedIncomingId = v); refreshSheet(() {}); }),
+            const SizedBox(height: 8),
+            SizedBox(width: double.infinity, child: FilledButton.icon(
+              onPressed: substitutionsUsed >= 5 || selectedOutgoingId == null || selectedIncomingId == null ? null : () { _makeHalftimeSubstitution(); refreshSheet(() {}); },
+              icon: const Icon(Icons.swap_horiz), label: const Text('CONFIRM SUBSTITUTION'))),
+            if (halftimeNotes.isNotEmpty) ...[
+              const SizedBox(height: 10),
+              for (final note in halftimeNotes) Padding(padding: const EdgeInsets.only(bottom: 3),
+                child: Text('• ' + note, style: const TextStyle(color: Colors.white60, fontSize: 10))),
+            ],
+            const SizedBox(height: 10),
+            const Text('Important: the current match result is already calculated before this screen opens. Team talks, tactics and lineup changes are saved to your career, but do not recalculate this match’s second-half events yet.', style: TextStyle(color: Colors.white38, fontSize: 10, height: 1.4)),
+          ])),
+        ));
+      }),
+    );
+  }
+
+  Widget _tacticDropdown<T>({required String label, required T? value, required List<T> values, List<String>? labels, required ValueChanged<T?> onChanged}) {
+    final safeValue = values.contains(value) ? value : null;
+    return DropdownButtonFormField<T>(
+      value: safeValue, isExpanded: true,
+      decoration: InputDecoration(labelText: label, labelStyle: const TextStyle(color: Colors.white54, fontSize: 10),
+        filled: true, fillColor: Colors.white.withOpacity(.05), contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+      dropdownColor: const Color(0xFF203D52), style: const TextStyle(color: Colors.white, fontSize: 11),
+      items: List<DropdownMenuItem<T>>.generate(values.length, (i) => DropdownMenuItem<T>(value: values[i],
+        child: Text(labels != null && i < labels.length ? labels[i] : values[i].toString(), overflow: TextOverflow.ellipsis))),
+      onChanged: onChanged,
+    );
+  }
+
   void _resumeSecondHalf() {
     if (!mounted) return;
     setState(() => halftimePaused = false);
@@ -124,7 +259,7 @@ class _MatchScreenState extends State<MatchScreen> {
             ]),
           ]),
         ),
-        Padding(padding: const EdgeInsets.all(12), child: AspectRatio(aspectRatio: 0.88,
+        Padding(padding: const EdgeInsets.all(12), child: AspectRatio(aspectRatio: halftimePaused ? 1.12 : 0.88,
           child: ClipRRect(borderRadius: BorderRadius.circular(14), child: CustomPaint(
             painter: _PitchPainter(),
             child: Stack(children: [
@@ -189,6 +324,7 @@ class _MatchScreenState extends State<MatchScreen> {
         Expanded(child: ListView(padding: const EdgeInsets.all(14), children: [
           const Text('MATCH TIMELINE', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w900, letterSpacing: 1.2)),
           const SizedBox(height: 8),
+          for (final note in halftimeNotes) Card(child: ListTile(dense: true, leading: const Icon(Icons.swap_horiz, color: AppTheme.green), title: Text(note, style: const TextStyle(fontSize: 10)))),
           for (final e in visible.reversed) _EventTile(event: e, career: c),
           if (finished) ...[
             const SizedBox(height: 12),
@@ -196,14 +332,11 @@ class _MatchScreenState extends State<MatchScreen> {
             _Stats(result: r),
           ],
         ])),
-        if (halftimePaused) Padding(
-          padding: const EdgeInsets.fromLTRB(14, 8, 14, 14),
-          child: SizedBox(width: double.infinity, child: FilledButton.icon(
-            onPressed: _resumeSecondHalf,
-            icon: const Icon(Icons.play_arrow_rounded),
-            label: const Text('START SECOND HALF'),
-          )),
-        ),
+        if (halftimePaused) Padding(padding: const EdgeInsets.fromLTRB(14, 6, 14, 4), child: Row(children: [
+          Expanded(child: OutlinedButton.icon(onPressed: _openHalftimeManager, icon: const Icon(Icons.tune_rounded, size: 17), label: const Text('TEAM TALK & CHANGES'))),
+          const SizedBox(width: 8),
+          Expanded(child: FilledButton.icon(onPressed: _resumeSecondHalf, icon: const Icon(Icons.play_arrow_rounded), label: const Text('START SECOND HALF'))),
+        ])),
         if (finished) Padding(padding: const EdgeInsets.all(14), child: SizedBox(width: double.infinity, child: FilledButton(onPressed: () => Navigator.pop(context), child: const Text('CONTINUE')))),
       ]),
     );
