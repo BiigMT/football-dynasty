@@ -263,8 +263,12 @@ class _MatchScreenState extends State<MatchScreen> {
           child: ClipRRect(borderRadius: BorderRadius.circular(14), child: CustomPaint(
             painter: _PitchPainter(),
             child: Stack(children: [
-              for (var i = 0; i < r.homeXI.length && i < 11; i++) _PlayerDot(index: i, home: true, minute: minute),
-              for (var i = 0; i < r.awayXI.length && i < 11; i++) _PlayerDot(index: i, home: false, minute: minute),
+              for (var i = 0; i < activeHomeXI.length && i < 11; i++)
+                _PlayerDot(index: i, home: true, minute: minute,
+                  playerName: c.players[activeHomeXI[i]]?.name ?? 'Home player'),
+              for (var i = 0; i < activeAwayXI.length && i < 11; i++)
+                _PlayerDot(index: i, home: false, minute: minute,
+                  playerName: c.players[activeAwayXI[i]]?.name ?? 'Away player'),
               AnimatedAlign(
                 duration: const Duration(milliseconds: 650),
                 curve: Curves.easeInOutCubic,
@@ -352,8 +356,14 @@ class _Team extends StatelessWidget {
   ]));
 }
 class _PlayerDot extends StatelessWidget {
-  final int index; final bool home; final int minute;
-  const _PlayerDot({required this.index, required this.home, required this.minute});
+  final int index; final bool home; final int minute; final String playerName;
+  const _PlayerDot({required this.index, required this.home, required this.minute, required this.playerName});
+  String _initials(String name) {
+    final parts = name.trim().split(RegExp(r'\\s+')).where((p) => p.isNotEmpty).toList();
+    if (parts.isEmpty) return (index + 1).toString();
+    if (parts.length == 1) return parts.first.substring(0, parts.first.length > 1 ? 2 : 1).toUpperCase();
+    return (parts.first[0] + parts.last[0]).toUpperCase();
+  }
   @override
   Widget build(BuildContext context) {
     final row = index == 0 ? 0 : index <= 4 ? 1 : index <= 7 ? 2 : 3;
@@ -380,7 +390,7 @@ class _PlayerDot extends StatelessWidget {
             boxShadow: [BoxShadow(color: Colors.black.withOpacity(.35), blurRadius: 5, offset: const Offset(0, 2))],
           ),
           alignment: Alignment.center,
-          child: Text((index + 1).toString(), style: const TextStyle(color: Color(0xFF08111D), fontSize: 8, fontWeight: FontWeight.w900)),
+          child: Text(_initials(playerName), style: const TextStyle(color: Color(0xFF08111D), fontSize: 7, fontWeight: FontWeight.w900)),
         )),
       ]);
     });
