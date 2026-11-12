@@ -88,14 +88,24 @@ class DashboardScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20),
-        const _SectionHeading(title: 'MANAGER HUB', trailing: 'QUICK ACCESS'),
+        const _SectionHeading(title: 'MANAGER HUB', trailing: 'CAREER CONTROL'),
         const SizedBox(height: 9),
-        _ActionTile(icon: Icons.groups_rounded, title: 'TEAM MANAGEMENT', subtitle: 'Squad selection, player roles and fitness', onTap: () => _open(context, const SquadScreen())),
-        _ActionTile(icon: Icons.tune_rounded, title: 'TACTICS', subtitle: 'Formation, mentality and match approach', onTap: () => _open(context, const TacticsScreen())),
-        _ActionTile(icon: Icons.storefront_rounded, title: 'TRANSFER MARKET', subtitle: 'Scout, negotiate, buy and sell players', onTap: () => _open(context, const TransfersScreen())),
-        _ActionTile(icon: Icons.business_center_rounded, title: 'MANAGER OFFICE', subtitle: 'Board expectations, finances and club status', onTap: () => _office(context, game)),
-        _ActionTile(icon: Icons.emoji_events_rounded, title: 'COMPETITIONS', subtitle: 'League standings and season race', onTap: () => _open(context, const CompetitionsScreen())),
-        _ActionTile(icon: Icons.flag_rounded, title: 'NATIONAL TEAM', subtitle: 'International call-ups and squad selection', onTap: () => _open(context, const NationalTeamScreen())),
+        GridView.count(
+          crossAxisCount: 2,
+          crossAxisSpacing: 9,
+          mainAxisSpacing: 9,
+          childAspectRatio: 1.48,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            _ActionTile(icon: Icons.groups_rounded, title: 'SQUAD', subtitle: 'Players, roles & fitness', onTap: () => _open(context, const SquadScreen())),
+            _ActionTile(icon: Icons.tune_rounded, title: 'TACTICS', subtitle: 'Shape & match approach', onTap: () => _open(context, const TacticsScreen())),
+            _ActionTile(icon: Icons.storefront_rounded, title: 'TRANSFERS', subtitle: 'Scout, sign & sell players', onTap: () => _open(context, const TransfersScreen())),
+            _ActionTile(icon: Icons.business_center_rounded, title: 'MANAGER OFFICE', subtitle: 'Board, money & objectives', onTap: () => _office(context, game)),
+            _ActionTile(icon: Icons.emoji_events_rounded, title: 'SEASON', subtitle: 'Table & competitions', onTap: () => _open(context, const CompetitionsScreen())),
+            _ActionTile(icon: Icons.flag_rounded, title: 'NATIONAL TEAM', subtitle: 'Call-ups & selection', onTap: () => _open(context, const NationalTeamScreen())),
+          ],
+        ),
         const SizedBox(height: 19),
         _SectionHeading(title: 'MATCH CENTRE', trailing: 'NEXT EVENT'),
         const SizedBox(height: 9),
@@ -275,21 +285,57 @@ class _BudgetChip extends StatelessWidget {
 class _ActionTile extends StatelessWidget {
   final IconData icon; final String title, subtitle; final VoidCallback onTap;
   const _ActionTile({required this.icon, required this.title, required this.subtitle, required this.onTap});
-  @override Widget build(BuildContext context) => Padding(padding: const EdgeInsets.only(bottom: 7),
-    child: Material(color: const Color(0xCC111E2D), borderRadius: BorderRadius.circular(15),
-      child: InkWell(onTap: onTap, borderRadius: BorderRadius.circular(15), child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 12),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), border: Border.all(color: Colors.white.withOpacity(.07))),
-        child: Row(children: [
-          Container(width: 38, height: 38, decoration: BoxDecoration(color: AppTheme.green.withOpacity(.12), borderRadius: BorderRadius.circular(11)),
-            child: Icon(icon, color: AppTheme.green, size: 20)),
-          const SizedBox(width: 12), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(title, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w900, letterSpacing: .5)),
-            const SizedBox(height: 3), Text(subtitle, maxLines: 1, overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 9, color: Colors.white54)),
-          ])), const Icon(Icons.chevron_right, color: Colors.white38),
-        ]),
-      ))));
+  @override Widget build(BuildContext context) => Material(
+    color: const Color(0xCC111E2D),
+    borderRadius: BorderRadius.circular(17),
+    child: InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(17),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(17),
+          border: Border.all(color: Colors.white.withOpacity(.08)),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xFF172A40), Color(0xFF0E1928)],
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 35,
+                  height: 35,
+                  decoration: BoxDecoration(
+                    color: AppTheme.green.withOpacity(.13),
+                    borderRadius: BorderRadius.circular(11),
+                  ),
+                  child: Icon(icon, color: AppTheme.green, size: 19),
+                ),
+                const Icon(Icons.arrow_outward_rounded, color: Colors.white38, size: 15),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, maxLines: 1, overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w900, letterSpacing: .45)),
+                const SizedBox(height: 4),
+                Text(subtitle, maxLines: 1, overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 8, color: Colors.white54)),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
 class _FeaturedNews extends StatelessWidget {
