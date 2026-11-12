@@ -34,7 +34,7 @@ class _SquadScreenState extends State<SquadScreen> {
         title:const Text('SQUAD & TACTICS',style:TextStyle(fontSize:16,letterSpacing:1.1,fontWeight:FontWeight.w900)),
         actions:[Padding(padding:const EdgeInsets.only(right:10),child:DropdownButtonHideUnderline(
           child:DropdownButton<int>(
-            value:tactics.mentality.clamp(0,2),dropdownColor:AppTheme.panel,
+            value:tactics.mentality.clamp(0,2).toInt(),dropdownColor:AppTheme.panel,
             icon:const Icon(Icons.keyboard_arrow_down,color:AppTheme.green),
             style:const TextStyle(color:AppTheme.green,fontWeight:FontWeight.w800,fontSize:11),
             items:const [
