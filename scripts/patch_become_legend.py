@@ -241,6 +241,6 @@ replace('lib/screens/dashboard_screen.dart',
   "import 'national_team_screen.dart';",
   "import 'national_team_screen.dart';\nimport 'become_legend_screen.dart';")
 replace('lib/screens/dashboard_screen.dart',
-  "        _ActionTile(icon: Icons.flag_rounded, title: 'NATIONAL TEAM', subtitle: 'International call-ups and squad selection', onTap: () => _open(context, const NationalTeamScreen())),\n        const SizedBox(height: 19),",
-  "        _ActionTile(icon: Icons.flag_rounded, title: 'NATIONAL TEAM', subtitle: 'International call-ups and squad selection', onTap: () => _open(context, const NationalTeamScreen())),\n        _ActionTile(icon: Icons.person_pin_circle_rounded, title: 'BECOME A LEGEND', subtitle: 'Separate player career — create your own football journey', onTap: () => _open(context, const BecomeLegendScreen())),\n        const SizedBox(height: 19),")
+  "            _ActionTile(icon: Icons.flag_rounded, title: 'NATIONAL TEAM', subtitle: 'Call-ups & selection', onTap: () => _open(context, const NationalTeamScreen())),",
+  "            _ActionTile(icon: Icons.flag_rounded, title: 'NATIONAL TEAM', subtitle: 'Call-ups & selection', onTap: () => _open(context, const NationalTeamScreen())),\n            _ActionTile(icon: Icons.person_pin_circle_rounded, title: 'BECOME A LEGEND', subtitle: 'Separate player career — create your own football journey', onTap: () => _open(context, const BecomeLegendScreen())),")
 print('Separate Become a Legend mode patch applied.')
