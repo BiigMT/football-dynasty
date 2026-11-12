@@ -17,6 +17,7 @@ class _MatchScreenState extends State<MatchScreen> {
   Timer? timer;
   int shown = 0;
   bool fast = false;
+  bool halftimePaused = false;
   List<MatchEvent> get events => widget.result.events;
   bool get finished => shown >= events.length;
   @override
@@ -27,7 +28,16 @@ class _MatchScreenState extends State<MatchScreen> {
       if (!mounted) return;
       if (finished) { timer?.cancel(); return; }
       setState(() => shown++);
+      if (shown > 0 && events[shown - 1].type == EventType.halftime) {
+        timer?.cancel();
+        if (mounted) setState(() => halftimePaused = true);
+      }
     });
+  }
+  void _resumeSecondHalf() {
+    if (!mounted) return;
+    setState(() => halftimePaused = false);
+    _tick();
   }
   @override
   void dispose() { timer?.cancel(); super.dispose(); }
@@ -71,7 +81,7 @@ class _MatchScreenState extends State<MatchScreen> {
                 boxShadow: [BoxShadow(color: (finished ? AppTheme.gold : AppTheme.green).withOpacity(.65), blurRadius: 7)],
               )),
               const SizedBox(width: 7),
-              Text(finished ? 'FULL TIME' : minute == 0 ? 'PRE-MATCH' : 'LIVE MATCH',
+              Text(finished ? 'FULL TIME' : halftimePaused ? 'HALF TIME' : minute == 0 ? 'PRE-MATCH' : minute > 45 ? 'SECOND HALF' : 'FIRST HALF',
                 style: const TextStyle(color: AppTheme.green, fontSize: 9, fontWeight: FontWeight.w900, letterSpacing: 2)),
               const SizedBox(width: 7),
               const Text('•  FOOTBALL DYNASTY', style: TextStyle(color: Colors.white38, fontSize: 8, letterSpacing: .8)),
@@ -139,11 +149,11 @@ class _MatchScreenState extends State<MatchScreen> {
               ),
               if (visible.isNotEmpty && visible.last.type == EventType.goal)
                 const Align(alignment: Alignment.bottomCenter, child: Padding(padding: EdgeInsets.all(8), child: Text('⚽  GOAL!', style: TextStyle(color: Colors.white, fontSize: 16, letterSpacing: 2, fontWeight: FontWeight.w900, shadows: [Shadow(color: Colors.black, blurRadius: 8)])))),
-              if (visible.isNotEmpty && (visible.last.type == EventType.halftime || visible.last.type == EventType.fulltime))
+              if (halftimePaused || (visible.isNotEmpty && (visible.last.type == EventType.halftime || visible.last.type == EventType.fulltime)))
                 Center(child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
                   decoration: BoxDecoration(color: const Color(0xE6091522), borderRadius: BorderRadius.circular(14), border: Border.all(color: AppTheme.green.withOpacity(.6))),
-                  child: Text(visible.last.type == EventType.halftime ? 'HALF TIME' : 'FULL TIME',
+                  child: Text(halftimePaused || visible.last.type == EventType.halftime ? 'HALF TIME' : 'FULL TIME',
                     style: const TextStyle(color: AppTheme.green, fontSize: 17, letterSpacing: 2, fontWeight: FontWeight.w900)),
                 )),
             ]),
@@ -186,6 +196,14 @@ class _MatchScreenState extends State<MatchScreen> {
             _Stats(result: r),
           ],
         ])),
+        if (halftimePaused) Padding(
+          padding: const EdgeInsets.fromLTRB(14, 8, 14, 14),
+          child: SizedBox(width: double.infinity, child: FilledButton.icon(
+            onPressed: _resumeSecondHalf,
+            icon: const Icon(Icons.play_arrow_rounded),
+            label: const Text('START SECOND HALF'),
+          )),
+        ),
         if (finished) Padding(padding: const EdgeInsets.all(14), child: SizedBox(width: double.infinity, child: FilledButton(onPressed: () => Navigator.pop(context), child: const Text('CONTINUE')))),
       ]),
     );
