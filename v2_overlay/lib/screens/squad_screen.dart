@@ -3,6 +3,7 @@ import '../domain/models.dart';
 import '../state/game_controller.dart';
 import '../theme/app_theme.dart';
 import '../widgets/player_avatar_painter.dart';
+import '../widgets/fd_ui_kit.dart';
 import '../widgets/common.dart';
 import 'player_screen.dart';
 
@@ -106,12 +107,7 @@ class _SquadScreenState extends State<SquadScreen> {
                       ]),
                     ])),
                     const SizedBox(width:10),
-                    Container(width:43,height:45,alignment:Alignment.center,decoration:BoxDecoration(color:ratingColor.withValues(alpha:.12),borderRadius:BorderRadius.circular(9),border:Border.all(color:ratingColor.withValues(alpha:.7))),
-                      child:Column(mainAxisAlignment:MainAxisAlignment.center,children:[
-                        Text('${p.rating}',style:TextStyle(color:ratingColor,fontSize:18,fontWeight:FontWeight.w900,height:1)),
-                        const SizedBox(height:3),
-                        const Text('OVR',style:TextStyle(color:Colors.white54,fontSize:7,fontWeight:FontWeight.w900)),
-                      ])),
+                    FdRatingBadge(p.rating),
                   ]),
                 ),
               ));
